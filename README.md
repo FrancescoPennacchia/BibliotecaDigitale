@@ -1,9 +1,10 @@
 # BibliotecaDigitale
 
 Studenti:
--> Francesco Pennacchia
--> Simone De Angelis
--> Riccardo Scarpellino
+
+Francesco Pennacchia;
+Simone De Angelis;
+Riccardo Scarpellino.
 
 Il progetto è un’estensione della traccia fornita nell’a.a. 2015/16 e si propone di realizzare una biblioteca digitale di testi e studi che contribuiscono alla formazione della cultura all’interno dell’Università degli Studi dell’Aquila. Una biblioteca digitale è uno spazio in cui mettere insieme collezioni, servizi e persone a supporto dell'intero ciclo di vita di creazione, uso, preservazione di dati, informazione e conoscenza. Lo scopo di questo progetto è di consentire la consultazione dei manoscritti che devono essere digitalizzati e che costituiscono un patrimonio bibliografico antico per un totale di 60.000 carte (ms. sec. XV-XIX) contenenti memorie storiche della città dell’Aquila.
 
