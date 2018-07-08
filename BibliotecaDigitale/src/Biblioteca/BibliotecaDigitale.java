@@ -5,8 +5,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-import ConnectionDataBase.User;
-import Interfaces.InterfaceUser;
+import controller.componenti.Utente;
+import controller.interfaces.InterfaceUser;
+import model.connectionDataBase.User;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -21,7 +23,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.Color;
-import Componenti.Utente;
 
 public class BibliotecaDigitale {
 

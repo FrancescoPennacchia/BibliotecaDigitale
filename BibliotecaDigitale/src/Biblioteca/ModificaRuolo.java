@@ -11,9 +11,9 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 
-import Componenti.Utente;
-import ConnectionDataBase.User;
-import Interfaces.InterfaceUser;
+import controller.componenti.Utente;
+import controller.interfaces.InterfaceUser;
+import model.connectionDataBase.User;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;

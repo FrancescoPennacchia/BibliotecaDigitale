@@ -12,11 +12,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 
-import Componenti.Opera;
-import Componenti.Utente;
-import ConnectionDataBase.ConnectionOpera;
-import Interfaces.InterfaceOpera;
-import Exception.Exception;
+import controller.componenti.Opera;
+import controller.componenti.Utente;
+import controller.interfaces.InterfaceOpera;
+import model.connectionDataBase.ConnectionOpera;
+import model.exception.Exception;
 
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -117,7 +117,7 @@ public class ModuloAggiungiPagina {
                     File tempFile = null;
                 
                 try {
-                	img[0] = Componenti.Component.TipoImmagine(selectedfile);
+                	img[0] = controller.componenti.Component.TipoImmagine(selectedfile);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -135,7 +135,7 @@ public class ModuloAggiungiPagina {
                     throw new Exception("File non compatibile");
                 }
                 
-                    System.out.println("errore");
+                    //System.out.println("errore");
                     try {
                     	tempFile = new File("./src/img/Imma.png");
                     	
@@ -143,7 +143,7 @@ public class ModuloAggiungiPagina {
                         //System.out.println("errore");
                         int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
                       //  System.out.println("errore");                                                286, 271
-                        BufferedImage buffimg = Componenti.Component.ResizeImmagine(originalImage, type, 286, 271);  // Cambiare dimensioni
+                        BufferedImage buffimg = controller.componenti.Component.ResizeImmagine(originalImage, type, 286, 271);  // Cambiare dimensioni
                        // System.out.println("errore4");
                         ImageIO.write(buffimg, tempFileExt, tempFile);
                       //  System.out.println("errore5");

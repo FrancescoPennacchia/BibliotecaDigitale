@@ -4,9 +4,9 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-import Componenti.Utente;
-import ConnectionDataBase.User;
-import Interfaces.InterfaceUser;
+import controller.componenti.Utente;
+import controller.interfaces.InterfaceUser;
+import model.connectionDataBase.User;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

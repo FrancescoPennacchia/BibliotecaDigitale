@@ -4,8 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-import Componenti.Opera;
-import Componenti.Utente;
+import controller.componenti.Opera;
+import controller.componenti.Utente;
 
 import javax.swing.JButton;
 import java.awt.Font;

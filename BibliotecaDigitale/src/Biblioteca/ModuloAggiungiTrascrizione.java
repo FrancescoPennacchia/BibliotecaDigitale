@@ -18,11 +18,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import Componenti.Opera;
-import Componenti.Utente;
-import ConnectionDataBase.ConnectionOpera;
-import Interfaces.InterfaceOpera;
+import controller.componenti.Opera;
+import controller.componenti.Utente;
+import controller.interfaces.InterfaceOpera;
+import model.connectionDataBase.ConnectionOpera;
+
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 public class ModuloAggiungiTrascrizione {
 	Utente utente = null;
@@ -147,7 +149,7 @@ public class ModuloAggiungiTrascrizione {
              String ext = null;
              
              try {
-             	ext = Componenti.Component.TipoImmagine(imgFile);
+             	ext = controller.componenti.Component.TipoImmagine(imgFile);
              } catch (IOException e1) {
                  e1.printStackTrace();
              }
@@ -230,5 +232,4 @@ public class ModuloAggiungiTrascrizione {
 
 	
 	}
-
 }

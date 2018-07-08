@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import Componenti.Utente;
-import ConnectionDataBase.ConnectionOpera;
+
+import controller.componenti.Utente;
+import controller.interfaces.InterfaceOpera;
+import model.connectionDataBase.ConnectionOpera;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,7 +19,6 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
-import Interfaces.InterfaceOpera;
 
 public class ModuloRicercaCategoria {
 	Utente utente = null;

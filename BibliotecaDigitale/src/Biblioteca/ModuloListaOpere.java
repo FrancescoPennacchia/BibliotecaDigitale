@@ -14,10 +14,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import Componenti.Opera;
-import Componenti.Utente;
-import ConnectionDataBase.ConnectionOpera;
-import Interfaces.InterfaceOpera;
+import controller.componenti.Opera;
+import controller.componenti.Utente;
+import controller.interfaces.InterfaceOpera;
+import model.connectionDataBase.ConnectionOpera;
 
 public class ModuloListaOpere {
 	

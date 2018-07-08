@@ -13,9 +13,10 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import Componenti.Utente;
-import ConnectionDataBase.ConnectionOpera;
-import Interfaces.InterfaceOpera;
+
+import controller.componenti.Utente;
+import controller.interfaces.InterfaceOpera;
+import model.connectionDataBase.ConnectionOpera;
 
 public class ModuloAggiungiCategoria {
 

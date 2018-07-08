@@ -13,10 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import Componenti.Utente;
-import ConnectionDataBase.ConnectionOpera;
-import Interfaces.InterfaceOpera;
-import Componenti.Opera;
+import controller.componenti.Opera;
+import controller.componenti.Utente;
+import controller.interfaces.InterfaceOpera;
+import model.connectionDataBase.ConnectionOpera;
 
 public class ModuloElencoPagine {
 	Utente utente = null;

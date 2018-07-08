@@ -7,10 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import Componenti.Utente;
-import ConnectionDataBase.User;
-import Interfaces.InterfaceUser;
-
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +18,11 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
-import Exception.Exception;
+
+import controller.componenti.Utente;
+import controller.interfaces.InterfaceUser;
+import model.connectionDataBase.User;
+import model.exception.Exception;
 
 public class ModuloModificaProfilo {
 

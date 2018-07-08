@@ -10,8 +10,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import ConnectionDataBase.User;
-
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -20,8 +18,10 @@ import java.sql.SQLException;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-import Exception.Exception;
-import Interfaces.InterfaceUser;
+
+import controller.interfaces.InterfaceUser;
+import model.connectionDataBase.User;
+import model.exception.Exception;
 
 
 public class ModuloRegistrazione {
