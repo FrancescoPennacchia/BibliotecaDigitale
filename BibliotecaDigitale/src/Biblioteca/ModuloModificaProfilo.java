@@ -21,8 +21,8 @@ import java.text.ParseException;
 
 import controller.componenti.Utente;
 import controller.interfaces.InterfaceUser;
+import exception.Exception;
 import model.connectionDataBase.User;
-import model.exception.Exception;
 
 public class ModuloModificaProfilo {
 

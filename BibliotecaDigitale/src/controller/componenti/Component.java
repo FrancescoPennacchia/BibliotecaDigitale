@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
-import model.exception.Exception;
+import exception.Exception;
 
 public class Component {
     /* Convert a date into a string */

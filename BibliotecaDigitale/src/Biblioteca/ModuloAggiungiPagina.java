@@ -15,8 +15,8 @@ import javax.swing.filechooser.FileSystemView;
 import controller.componenti.Opera;
 import controller.componenti.Utente;
 import controller.interfaces.InterfaceOpera;
+import exception.Exception;
 import model.connectionDataBase.ConnectionOpera;
-import model.exception.Exception;
 
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;

@@ -15,7 +15,7 @@ import net.proteanit.sql.DbUtils;
 import controller.componenti.Component;
 import controller.componenti.Utente;
 import controller.interfaces.InterfaceUser;
-import model.exception.Exception;
+import exception.Exception;
 
 
 public class User implements InterfaceUser {

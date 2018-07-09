@@ -20,8 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
 import controller.interfaces.InterfaceUser;
+import exception.Exception;
 import model.connectionDataBase.User;
-import model.exception.Exception;
 
 
 public class ModuloRegistrazione {
