@@ -1,4 +1,4 @@
-package controller.componenti;
+package common.vo;
 
 public class Opera {
 	int cod, anno, cod_categoria;

@@ -5,25 +5,24 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-import controller.componenti.Utente;
-import controller.interfaces.InterfaceOpera;
-import model.connectionDataBase.ConnectionOpera;
-
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import common.ChangePage;
+import common.vo.Utente;
+import controller.list.OperaListCat;
 
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+
 import java.awt.event.ActionEvent;
 
 public class ModuloRicercaCategoria {
 	Utente utente = null;
 	int count;
-	InterfaceOpera opera = new ConnectionOpera();
+	OperaListCat ol = new OperaListCat();
 
 	private JFrame frmListaCategorie;
 
@@ -88,8 +87,7 @@ public class ModuloRicercaCategoria {
 		JButton btnTornaIndietro = new JButton("Torna Indietro");
 		btnTornaIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TipoRicerca TR = new TipoRicerca(utente);
-				TR.Ricerca(utente);
+				ChangePage.changePage("TipoRicerca", utente);
 				frmListaCategorie.dispose();
 			}
 		});
@@ -109,8 +107,7 @@ public class ModuloRicercaCategoria {
 		btnAggiungiNuovaCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//inserire aggiungere la categoria
-				ModuloAggiungiCategoria MAC = new ModuloAggiungiCategoria(utente);
-				MAC.AggiungiCategoria(utente);
+				ChangePage.changePage("AggiungiCategoria", utente);
 				frmListaCategorie.dispose();
 			}
 		});
@@ -120,12 +117,12 @@ public class ModuloRicercaCategoria {
 		
 
 		
-		try {
-			if(opera.GetCategorie().getRowCount() != 0) {
+	
+			if(ol.NumeroRigheOpera() != 0) {
 				
-				try {
+				
 					String categoria1 = "";
-					categoria1 = String.valueOf(opera.GetCategorie().getValueAt(count, 1)); // RIGA - COLONNA
+					categoria1 = ol.getInfoOpera(count, 1); // RIGA - COLONNA
 					
 					JPanel panel = new JPanel();
 					JLabel lblcategoria1 = new JLabel(categoria1);
@@ -141,15 +138,11 @@ public class ModuloRicercaCategoria {
 					btnAccedi.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 				
-							try {
-								String Opera = String.valueOf(opera.GetCategorie().getValueAt(count, 1));
-								ModuloListaOperePerCategoria MOPC = new ModuloListaOperePerCategoria(utente, count, Opera);
-								MOPC.OperePerCategoria(utente, 0, Opera);
+						
+								String Opera = ol.getInfoOpera(count, 1);
+								ChangePage.OperePerCat(Opera, utente, 0);
 								frmListaCategorie.dispose();
-								
-					        } catch (SQLException e1){
-					            e1.printStackTrace();
-					        }
+					  
 
 						}
 					});
@@ -157,28 +150,19 @@ public class ModuloRicercaCategoria {
 					btnAccedi.setBounds(368, 75, 154, 27);
 					frmListaCategorie.getContentPane().add(btnAccedi);
 					
-
-					
-		        } catch (SQLException e){
-		            e.printStackTrace();
-		        }
-				
-			}   else JOptionPane.showMessageDialog(null, "Lista Opere vuota!");    
-			} catch (SQLException e1){
-            e1.printStackTrace();
         }
 		/* lisa categorie */
 		
 		
 		
 		/* lisa categorie */
-		try {
+	
 			JLabel lblCategoria2 = null;
-			if(count + 1 >= opera.GetCategorie().getRowCount())
+			if(count + 1 >= ol.NumeroRigheOpera())
 				 lblCategoria2 = new JLabel("");
 			else {
 				String user2 = "";	
-				user2 = String.valueOf(opera.GetCategorie().getValueAt(count + 1, 1));
+				user2 = ol.getInfoOpera(count + 1, 1);
 			
 			
 				lblCategoria2 = new JLabel(user2);
@@ -192,16 +176,12 @@ public class ModuloRicercaCategoria {
 				JButton btnRuolo2 = new JButton("Accedi");
 				btnRuolo2.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						try {
-							String Opera = String.valueOf(opera.GetCategorie().getValueAt(count + 1, 1));
-							ModuloListaOperePerCategoria MOPC = new ModuloListaOperePerCategoria(utente, count, Opera);
-							MOPC.OperePerCategoria(utente, 0, Opera);
+					
+							String Opera = ol.getInfoOpera(count + 1, 1);
+							ChangePage.OperePerCat(Opera, utente, 0);
 					
 							frmListaCategorie.dispose();
-							
-				        } catch (SQLException e1){
-				            e1.printStackTrace();
-				        }
+
 					}
 				});
 				btnRuolo2.setFont(new Font("Myriad CAD", Font.BOLD, 11));
@@ -209,19 +189,15 @@ public class ModuloRicercaCategoria {
 				frmListaCategorie.getContentPane().add(btnRuolo2);
 				}
 
-			
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
 		
 			
-		try {
+
 			JLabel lblCategoria3 = null;
-			if(count + 2 >= opera.GetCategorie().getRowCount())
+			if(count + 2 >= ol.NumeroRigheOpera())
 				 lblCategoria3 = new JLabel("");
 			else {
 				String Categoria3 = "";	
-				Categoria3 = String.valueOf(opera.GetCategorie().getValueAt(count + 2, 1));
+				Categoria3 = ol.getInfoOpera(count + 2, 1);
 			
 			
 				lblCategoria3 = new JLabel(Categoria3);
@@ -235,16 +211,10 @@ public class ModuloRicercaCategoria {
 				JButton btnCategoria3 = new JButton("Accedi");
 				btnCategoria3.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						try {
-							String Opera = String.valueOf(opera.GetCategorie().getValueAt(count + 2, 1));
-		
-							ModuloListaOperePerCategoria MOPC = new ModuloListaOperePerCategoria(utente, 0, Opera);
-							MOPC.OperePerCategoria(utente, count, Opera);
+				
+							String Opera = ol.getInfoOpera(count + 2, 1);
+							ChangePage.OperePerCat(Opera, utente, 0);
 							frmListaCategorie.dispose();
-							
-				        } catch (SQLException e1){
-				            e1.printStackTrace();
-				        }
 					}
 				});
 				btnCategoria3.setFont(new Font("Myriad CAD", Font.BOLD, 11));
@@ -252,18 +222,15 @@ public class ModuloRicercaCategoria {
 				frmListaCategorie.getContentPane().add(btnCategoria3);
 			}	
 			
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-		
+
 		/* Quarto utente */	
-		try {
+
 			JLabel lblCategoria4 = null;
-			if(count + 3 >= opera.GetCategorie().getRowCount())
+			if(count + 3 >= ol.NumeroRigheOpera())
 				 lblCategoria4 = new JLabel("");
 			else {
 				String Categoria4 = "";	
-				Categoria4 = String.valueOf(opera.GetCategorie().getValueAt(count + 3, 1));
+				Categoria4 = ol.getInfoOpera(count + 3, 1);
 			
 			
 				lblCategoria4 = new JLabel(Categoria4);
@@ -277,36 +244,29 @@ public class ModuloRicercaCategoria {
 				JButton btnCategoria4= new JButton("Accedi");
 				btnCategoria4.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						try {
-							String Opera = String.valueOf(opera.GetCategorie().getValueAt(count + 3, 1));
+
+							String Opera = ol.getInfoOpera(count + 3, 1);
 							
-							ModuloListaOperePerCategoria MOPC = new ModuloListaOperePerCategoria(utente, 0, Opera);
-							MOPC.OperePerCategoria(utente, count, Opera);
+							ChangePage.OperePerCat(Opera, utente, 0);
 							frmListaCategorie.dispose();
-							
-				        } catch (SQLException e1){
-				            e1.printStackTrace();
-				        }
+
 					}
 				});
 				btnCategoria4.setFont(new Font("Myriad CAD", Font.BOLD, 11));
 				btnCategoria4.setBounds(368, 237, 154, 27);
 				frmListaCategorie.getContentPane().add(btnCategoria4);
 			}	
-			
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
+
 		
 		
 		/* QUinto utente */	
-		try {
+
 			JLabel lblCategoria5 = null;
-			if(count + 4 >= opera.GetCategorie().getRowCount())
+			if(count + 4 >= ol.NumeroRigheOpera())
 				lblCategoria5 = new JLabel("");
 			else {
 				String Categoria5 = "";	
-				Categoria5 = String.valueOf(opera.GetCategorie().getValueAt(count + 4, 1));
+				Categoria5 = ol.getInfoOpera(count + 4, 1);
 			
 			
 				lblCategoria5 = new JLabel(Categoria5);
@@ -320,16 +280,10 @@ public class ModuloRicercaCategoria {
 				JButton btnCategoria5 = new JButton("Accedi");
 				btnCategoria5.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						try {
-							String Opera = String.valueOf(opera.GetCategorie().getValueAt(count + 4, 1));
-							
-							ModuloListaOperePerCategoria MOPC = new ModuloListaOperePerCategoria(utente, 0, Opera);
-							MOPC.OperePerCategoria(utente, count, Opera);
+					
+							String Opera = ol.getInfoOpera(count + 4, 1);
+							ChangePage.OperePerCat(Opera, utente, 0);
 							frmListaCategorie.dispose();
-							
-				        } catch (SQLException e1){
-				            e1.printStackTrace();
-				        }
 					}
 				});
 				btnCategoria5.setFont(new Font("Myriad CAD", Font.BOLD, 11));
@@ -343,20 +297,17 @@ public class ModuloRicercaCategoria {
 			btnAvanti.setBounds(447, 341, 137, 27);
 			frmListaCategorie.getContentPane().add(btnAvanti);
 			
-	        try {
-	            if (count + 5 >= opera.GetCategorie().getRowCount()) {
+	     
+	            if (count + 5 >= ol.NumeroRigheOpera()) {
 	            	btnAvanti.setEnabled(false);
 	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+
 	        frmListaCategorie.getContentPane().add(btnAvanti);
 			btnAvanti.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					frmListaCategorie.dispose();
 					count = count +5;
-					ModuloRicercaCategoria MRC = new ModuloRicercaCategoria(utente, count);
-					MRC.RicercaCategoria(utente, count);
+					ChangePage.cat(utente, count);
 				}
 			});
 			
@@ -368,8 +319,7 @@ public class ModuloRicercaCategoria {
 				public void actionPerformed(ActionEvent e) {
 					count = count -5;
 					frmListaCategorie.dispose();
-					ModuloRicercaCategoria MRC = new ModuloRicercaCategoria(utente, count);
-					MRC.RicercaCategoria(utente, count);
+					ChangePage.cat(utente, count);
 				}
 			});
 			btnIndietro.setFont(new Font("Myriad CAD", Font.BOLD, 11));
@@ -378,10 +328,6 @@ public class ModuloRicercaCategoria {
 			
 			
 
-			
-        } catch (SQLException e){
-            e.printStackTrace();
-        }	
 		
 		/* Permessi */
 		if(utente.getMansione().equals("admin") || utente.getMansione().equals("uploader"))

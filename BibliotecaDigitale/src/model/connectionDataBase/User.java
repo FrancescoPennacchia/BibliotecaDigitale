@@ -11,11 +11,11 @@ import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 
+import common.Component;
+import common.vo.Utente;
 import net.proteanit.sql.DbUtils;
-import controller.componenti.Component;
-import controller.componenti.Utente;
-import controller.interfaces.InterfaceUser;
 import exception.Exception;
+import model.interfaces.InterfaceUser;
 
 
 public class User implements InterfaceUser {
@@ -259,8 +259,9 @@ public class User implements InterfaceUser {
         Connection dbConnection = model.connectionDataBase.ConnectionDB.Connect();
         
         // Query
-        String approveReview = "UPDATE utente \n" + "SET nome = ?" + " cognome = ?" + "email = ? " + "username = ? " + "residenza = ?" + "professione = ?" + "titolo_di_studi = ?" + "professione = ?"+ "professione = ?" + "id = ?"+ "WHERE id = ?";
+        String approveReview = "UPDATE utente SET nome = ?, cognome = ?, email = ?, username = ?, residenza = ?, professione = ?, titolo_di_studi = ?, password = ?"+ "WHERE id = ?";
 
+        //System.out.println("!UI");
         PreparedStatement preparedStatement = null;
 
         // Insert the values into the DB
@@ -274,9 +275,8 @@ public class User implements InterfaceUser {
             preparedStatement.setString(5, residenza);
             preparedStatement.setString(6, professione);
             preparedStatement.setString(7, studi);
-            preparedStatement.setString(8, professione);
-            preparedStatement.setString(9, password);
-            preparedStatement.setInt(10, utente.getId());
+            preparedStatement.setString(8, password);
+            preparedStatement.setInt(9, utente.getId());
             
 
 

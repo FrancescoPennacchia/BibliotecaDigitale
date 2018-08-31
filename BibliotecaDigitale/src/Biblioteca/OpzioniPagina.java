@@ -4,13 +4,15 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-import controller.componenti.Opera;
-import controller.componenti.Utente;
+import common.ChangePage;
+import common.vo.Opera;
+import common.vo.Utente;
 
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 
 public class OpzioniPagina {
 	Utente utente = null;
@@ -76,8 +78,7 @@ public class OpzioniPagina {
 		JButton btnVisualizzaopera = new JButton("Visualizza Pagina");
 		btnVisualizzaopera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ModuloVisualizzaPaginaOpera MV = new ModuloVisualizzaPaginaOpera(utente, opera, numero_pagina);
-				MV.VisualizzaPagina(utente, opera, numero_pagina);
+				ChangePage.changePage1("VisualizzaPagina", utente, opera, numero_pagina);
 				frmBibliotecaDigitale.dispose();
 			}
 		});
@@ -88,8 +89,7 @@ public class OpzioniPagina {
 		JButton btnInserisciModifica = new JButton("Inserisci trasciriozne");
 		btnInserisciModifica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ModuloAggiungiTrascrizione MV = new ModuloAggiungiTrascrizione(utente, opera, numero_pagina);
-				MV.AggiungiTrascrizione(utente, opera, numero_pagina);
+				ChangePage.changePage1("AggiugniTrascrizione", utente, opera, numero_pagina);
 				frmBibliotecaDigitale.dispose();				
 			}
 		});
@@ -100,8 +100,7 @@ public class OpzioniPagina {
 		JButton btnIndietro = new JButton("Indietro");
 		btnIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ModuloListaOpere MLO = new ModuloListaOpere(utente,0);
-				MLO.ElencoOpere(utente, 0);
+				ChangePage.changePage1("Elenco", utente, opera, 0);
 				frmBibliotecaDigitale.dispose();
 			}
 		});

@@ -47,6 +47,7 @@ CREATE TABLE `opera` (
   `anno` int(4) NOT NULL,
   `autore` varchar(60) NOT NULL,
   `cod_categoria` int(11) NOT NULL,
+   #`approvata` varchar(5) NULL,
   UNIQUE(cod),
   PRIMARY KEY (`cod`),
   FOREIGN KEY (cod_categoria) REFERENCES categoria_opera(cod_categoria) ON DELETE NO ACTION ON UPDATE CASCADE
@@ -64,7 +65,7 @@ CREATE TABLE `pagine_opera` (
     `cod_opera` int(11) NOT NULL,
 	`numero_pagina` int (11) NOT NULL,
 	PRIMARY KEY (`cod_pagina`),
-     FOREIGN KEY (`cod_opera`) REFERENCES opera(cod) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY (`cod_opera`) REFERENCES opera(cod) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 

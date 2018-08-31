@@ -9,13 +9,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-import controller.componenti.Opera;
-import controller.interfaces.InterfaceOpera;
+
+import model.interfaces.InterfaceOpera;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
+
+import common.vo.Opera;
 import net.proteanit.sql.DbUtils;
 
 public class ConnectionOpera implements InterfaceOpera {

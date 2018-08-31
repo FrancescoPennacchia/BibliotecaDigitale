@@ -10,7 +10,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JLabel;
 
-import controller.componenti.Utente;
+import common.ChangePage;
+import common.vo.Utente;
 
 import java.awt.Color;
 
@@ -80,9 +81,8 @@ public class ModuloLoggato {
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				ChangePage.changePage("Logout", utente);
 				frmBibliotecaDigitale.dispose();
-				BibliotecaDigitale BD = new BibliotecaDigitale();
-				BD.LoginPage();
 			}
 		});
 		btnLogout.setToolTipText("Ritorna alla schermata di Login");
@@ -104,9 +104,7 @@ public class ModuloLoggato {
 		JButton btnProfilo = new JButton("Profilo");
 		btnProfilo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//Utente ut = utente.GetUtente(usernameField.getText());
-				ModuloProfilo MP = new ModuloProfilo(utente);
-				MP.Profilo(utente);;
+				ChangePage.changePage("Profilo", utente);
 				frmBibliotecaDigitale.dispose();
 			}
 		});
@@ -118,8 +116,7 @@ public class ModuloLoggato {
 		JButton btnListaUtenti = new JButton("Lista Utenti");
 		btnListaUtenti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ModuloListaUtenti MLU = new ModuloListaUtenti(utente, 0);
-				MLU.ListaUtenti(utente, 0);
+				ChangePage.changePage("ListaUtenti", utente);
 				frmBibliotecaDigitale.dispose();
 			}
 		});
@@ -130,8 +127,7 @@ public class ModuloLoggato {
 		JButton btnElencoOpere = new JButton("Elenco Opere");
 		btnElencoOpere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TipoRicerca TR = new TipoRicerca(utente);
-				TR.Ricerca(utente);
+				ChangePage.changePage("TipoRicerca", utente);
 				frmBibliotecaDigitale.dispose();
 			}
 		});

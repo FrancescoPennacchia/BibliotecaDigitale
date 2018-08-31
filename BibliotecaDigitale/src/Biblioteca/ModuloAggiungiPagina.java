@@ -3,35 +3,33 @@ package Biblioteca;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
+
 
 import java.awt.Font;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileSystemView;
 
-import controller.componenti.Opera;
-import controller.componenti.Utente;
-import controller.interfaces.InterfaceOpera;
+import controller.action.ActionAddPagina;
 import exception.Exception;
 import model.connectionDataBase.ConnectionOpera;
+import model.interfaces.InterfaceOpera;
 
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+
+import common.ChangePage;
+import common.vo.Opera;
+import common.vo.Utente;
 
 public class ModuloAggiungiPagina {
 	//File Immagine = null;
 	Opera op = null;
 	Utente utente = null;
 	InterfaceOpera opera = new ConnectionOpera();
+	ActionAddPagina ap = new ActionAddPagina();
 
 
 	private JFrame frmBibliotecaDigitale;
@@ -85,7 +83,6 @@ public class ModuloAggiungiPagina {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 		frmBibliotecaDigitale = new JFrame();
 		frmBibliotecaDigitale.setTitle("Biblioteca Digitale - Inserimento Pagina");
 		frmBibliotecaDigitale.setResizable(false);
@@ -96,79 +93,22 @@ public class ModuloAggiungiPagina {
 		JButton btnIndietro = new JButton("Indietro");
 		btnIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                ModuloElencoPagine MEP = new ModuloElencoPagine(utente, op, 0);
-                MEP.ElencoPagine(utente, op, 0);
+				ChangePage.changePage1("ElencoPagine", utente, op, 0);
                 frmBibliotecaDigitale.dispose();			
 			}
 		});
 		btnIndietro.setFont(new Font("Myriad CAD", Font.BOLD, 11));
 		btnIndietro.setBounds(189, 255, 199, 38);
 		frmBibliotecaDigitale.getContentPane().add(btnIndietro);
-		final String[] img = {""};
+		
 		
 		JButton btnScegliImmagine = new JButton("Scegli Immagine e inserisci");
 		btnScegliImmagine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-                int retVal = jfc.showOpenDialog(frmBibliotecaDigitale);
-                if (retVal == JFileChooser.APPROVE_OPTION) {
-                    File selectedfile = jfc.getSelectedFile();
-                    String tempFileExt = null;
-                    File tempFile = null;
-                
-                try {
-                	img[0] = controller.componenti.Component.TipoImmagine(selectedfile);
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-
-                // Save the image type to resize it later
-                if (img[0].equals("JPEG")) {
-                    tempFileExt = "jpg";
-                } else if (img[0].equals("png")) {
-                    tempFileExt = "png";
-                } else if (img[0].equals("gif")) {
-                    tempFileExt = "gif";
-                }
-                
-                if (!img[0].equals("png") && !img[0].equals("JPEG")) {
-                    throw new Exception("File non compatibile");
-                }
-                
-                    //System.out.println("errore");
-                    try {
-                    	tempFile = new File("./src/img/Imma.png");
-                    	
-                        BufferedImage originalImage = ImageIO.read(selectedfile);
-                        //System.out.println("errore");
-                        int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
-                      //  System.out.println("errore");                                                286, 271
-                        BufferedImage buffimg = controller.componenti.Component.ResizeImmagine(originalImage, type, 286, 271);  // Cambiare dimensioni
-                       // System.out.println("errore4");
-                        ImageIO.write(buffimg, tempFileExt, tempFile);
-                      //  System.out.println("errore5");
-                    
-
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                    
-                    int NumeroPagina = 0;
-                    NumeroPagina = Integer.parseInt(textField.getText());
-                   
-                    
-                    if(opera.SetImgPagina(op.getCod(), tempFile, NumeroPagina)){
-                    	
-                 
-                        JOptionPane.showMessageDialog(null, "Operazione riuscita");
-                        ModuloElencoPagine MEP = new ModuloElencoPagine(utente, op, 0);
-                        MEP.ElencoPagine(utente, op, 0);
-                        frmBibliotecaDigitale.dispose();
-                        tempFile.delete();
-                    } else throw new Exception("Errore");
-                      
-
-                }
+				ap.setImage(op.getCod(), textField.getText());
+				ChangePage.changePage1("ElencoPagine", utente, op, 0);				
+				frmBibliotecaDigitale.dispose();
 			}
 		});
 		btnScegliImmagine.setFont(new Font("Myriad CAD", Font.BOLD, 11));

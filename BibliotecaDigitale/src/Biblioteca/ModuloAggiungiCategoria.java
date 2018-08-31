@@ -8,19 +8,22 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+
+import common.ChangePage;
+import common.vo.Utente;
+import controller.action.ActionAddCategoria;
+
 import javax.swing.JButton;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import controller.componenti.Utente;
-import controller.interfaces.InterfaceOpera;
-import model.connectionDataBase.ConnectionOpera;
 
 public class ModuloAggiungiCategoria {
 
-	InterfaceOpera opera = new ConnectionOpera();
+	
+	ActionAddCategoria ac = new ActionAddCategoria();
 	Utente utente = null;
 	private JFrame frmBibliotecaDigitale;
 	private JTextField txtNomeCategoria;
@@ -106,12 +109,7 @@ public class ModuloAggiungiCategoria {
 		JButton button = new JButton("Conferma");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					opera.NewCategoria(txtNomeCategoria.getText());
-					//frmBibliotecaDigitale.di
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				ac.addCat(txtNomeCategoria.getText());
 				
 			}
 		});
@@ -122,8 +120,7 @@ public class ModuloAggiungiCategoria {
 		JButton btnIndietro = new JButton("Indietro");
 		btnIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ModuloRicercaCategoria MRC = new ModuloRicercaCategoria(utente, 0);
-				MRC.RicercaCategoria(utente, 0);
+				ChangePage.changePage("Categoria", utente);
 				frmBibliotecaDigitale.dispose();
 			}
 		});

@@ -6,31 +6,32 @@ import java.awt.Font;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 
-import controller.componenti.Opera;
-import controller.componenti.Utente;
-import controller.interfaces.InterfaceOpera;
+import controller.action.ActionAddTrascrizione;
+import controller.action.getImg;
+import controller.list.PaginaList;
 import model.connectionDataBase.ConnectionOpera;
+import model.interfaces.InterfaceOpera;
 
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
+
+import common.ChangePage;
+import common.vo.Opera;
+import common.vo.Utente;
 
 public class ModuloAggiungiTrascrizione {
 	Utente utente = null;
 	Opera opera = null;
 	int numero_pagina = 0;
 	int cod_pagina = 0;
+	
+	ActionAddTrascrizione add = new ActionAddTrascrizione();
+	PaginaList pl = new PaginaList();
+	
 	InterfaceOpera pagine = new ConnectionOpera();
 
 	private JFrame frmBibliotecaDigitale;
@@ -86,6 +87,7 @@ public class ModuloAggiungiTrascrizione {
 	private void initialize() {
 		//String Trascrizione = "";
 		//int cod_pagina = 0;
+		getImg img = new getImg();
 		int n = 0;
 		frmBibliotecaDigitale = new JFrame();
 		frmBibliotecaDigitale.setTitle("Biblioteca Digitale - Inserimento Trascrizione");
@@ -94,20 +96,15 @@ public class ModuloAggiungiTrascrizione {
 		frmBibliotecaDigitale.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmBibliotecaDigitale.getContentPane().setLayout(null);
 		
-		try {
-			cod_pagina = Integer.parseInt(String.valueOf(pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getValueAt(numero_pagina, 0)));
-			n = Integer.parseInt(String.valueOf(pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getValueAt(numero_pagina, 4)));
-			//Trascrizione = String.valueOf(pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getValueAt(numero_pagina, 2));
-			
-		} catch (SQLException e1){
-            e1.printStackTrace();
-        }
+
+		cod_pagina = Integer.parseInt(pl.infoOpera(opera.getCod(), opera.getNome(), numero_pagina, 0));
+		n = Integer.parseInt(pl.infoOpera(opera.getCod(), opera.getNome(), numero_pagina, 4));
+
 		
 		JButton button = new JButton("Indietro");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				OpzioniPagina OP = new OpzioniPagina(utente, opera, numero_pagina);
-				OP.Opzioni(utente, opera, numero_pagina);
+				ChangePage.changePage1("Opzioni", utente, opera, numero_pagina);
 				frmBibliotecaDigitale.dispose();
 			}
 		});
@@ -130,56 +127,11 @@ public class ModuloAggiungiTrascrizione {
 		lblPagina.setFont(new Font("Myriad CAD", Font.BOLD, 13));
 		lblPagina.setBounds(398, 33, 168, 14);
 		frmBibliotecaDigitale.getContentPane().add(lblPagina);
-		
-		 try {
+
 			 
 			 Panel panel = new Panel();
-			 
-             // Image name
-             String imgName = "propic";
-             String imgDir = "./src/img/";
 
-             // Image path
-             String imgPath = imgDir + imgName;
-             File propicDir = new File(imgPath);
-
-             pagine.GetImgPagina(cod_pagina, imgPath);
-
-             File imgFile = new File(imgPath);
-             String ext = null;
-             
-             try {
-             	ext = controller.componenti.Component.TipoImmagine(imgFile);
-             } catch (IOException e1) {
-                 e1.printStackTrace();
-             }
-
-
-             if (ext.equals("JPEG")) {
-            	 ext = "jpg";
-             } else if (ext.equals("png")) {
-            	 ext = "png";
-             } else if (ext.equals("gif")) {
-            	 ext = "gif";
-             }
-             
-             imgPath = imgPath + ext;
-             
-             pagine.GetImgPagina(cod_pagina, imgPath);
-             
-             BufferedImage Immagine = null;
-             
-             try {
-
-            	 Immagine = ImageIO.read(new File(imgPath));
-
-                 JLabel lblImg = new JLabel(new ImageIcon(Immagine));
-                 panel.add(lblImg);
-
-             } catch (IOException e) {
-                 e.printStackTrace();
-             }
-             
+			 panel = img.getImmagine(cod_pagina);
              panel.setBounds(302, 54, 286, 271);
              frmBibliotecaDigitale.getContentPane().add(panel);
              
@@ -188,18 +140,11 @@ public class ModuloAggiungiTrascrizione {
              	public void actionPerformed(ActionEvent e) {
              		if(!textField.getText().isEmpty())
              		{
-             			try {
-             				pagine.UpdateTrascrizione(textField.getText(), cod_pagina);
-             				
-            				OpzioniPagina OP = new OpzioniPagina(utente, opera, numero_pagina);
-            				OP.Opzioni(utente, opera, numero_pagina);
-            				frmBibliotecaDigitale.dispose();
-            				
-             			} catch (SQLException e1) {
-            	            e1.printStackTrace();
-             		    }
              			
-             			
+             			add.addTrascrizione(textField.getText(), cod_pagina);
+             			ChangePage.changePage1("Opzioni", utente, opera, numero_pagina);
+            			frmBibliotecaDigitale.dispose();
+         			
              		}
              	}
              });
@@ -216,19 +161,7 @@ public class ModuloAggiungiTrascrizione {
              frmBibliotecaDigitale.getContentPane().add(textField);
              textField.setColumns(10);
 
-             // Delete the files
-             File directory = new File(imgDir);
-             for(File f: directory.listFiles())
-                 if(f.getName().startsWith("propi"))
-                     f.delete();
 
-             propicDir.delete();
-             
-             
-			 
-		 } catch (SQLException e) {
-	            e.printStackTrace();
-	     }
 
 	
 	}

@@ -1,4 +1,4 @@
-package controller.componenti;
+package common;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

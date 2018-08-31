@@ -5,7 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,16 +13,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import controller.componenti.Opera;
-import controller.componenti.Utente;
-import controller.interfaces.InterfaceOpera;
-import model.connectionDataBase.ConnectionOpera;
+import common.ChangePage;
+import common.vo.Opera;
+import common.vo.Utente;
+import controller.list.PaginaList;
+
 
 public class ModuloElencoPagine {
 	Utente utente = null;
 	Opera opera = null;
 	int count = 0;
-	InterfaceOpera pagine = new ConnectionOpera();
+	PaginaList pl = new PaginaList();
+	
 
 	private JFrame frmBibliotecaDigitale;
 
@@ -83,8 +85,7 @@ public class ModuloElencoPagine {
 		JButton btnTornaIndietro = new JButton("Torna Indietro");
 		btnTornaIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TipoRicerca TR = new TipoRicerca(utente);
-				TR.Ricerca(utente);
+				ChangePage.changePage("TipoRicerca", utente);
 				frmBibliotecaDigitale.dispose();
 			}
 		});
@@ -102,8 +103,7 @@ public class ModuloElencoPagine {
 		btnAggiungiPagina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//inserire aggiungere la categoria
-				ModuloAggiungiPagina OP = new ModuloAggiungiPagina(utente, opera);
-				OP.InserimentoPagina(utente, opera);
+				ChangePage.changePage1("AggiungiPagina", utente, opera, 0);
 				frmBibliotecaDigitale.dispose();
 			}
 		});
@@ -126,12 +126,12 @@ public class ModuloElencoPagine {
 
 		
 		
-		try {
-			if(pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getRowCount() != 0) {
+
+			if(pl.numeroRighe(opera.getCod(), opera.getNome()) != 0) {
 				
 				/* lisa opere */ //Nome Anno Autore
-				try {
-					String opera1 = String.valueOf(pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getValueAt(count, 4)); // RIGA - COLONNA
+		
+					String opera1 = pl.infoOpera(opera.getCod(), opera.getNome(), count, 4); // RIGA - COLONNA
 					
 					
 					
@@ -150,30 +150,24 @@ public class ModuloElencoPagine {
 					JButton btnAccedi = new JButton("Opzioni");
 					btnAccedi.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
-								OpzioniPagina MV = new OpzioniPagina(utente, opera, count);
-								MV.Opzioni(utente, opera, count);
+								ChangePage.changePage1("Opzioni", utente, opera, count);
 								frmBibliotecaDigitale.dispose();
 						}
 					});
 					btnAccedi.setFont(new Font("Myriad CAD", Font.BOLD, 11));
 					btnAccedi.setBounds(200, 75, 400, 27);
 					frmBibliotecaDigitale.getContentPane().add(btnAccedi);
-					
 
-					
-		        } catch (SQLException e){
-		            e.printStackTrace();
-		        }
 				
 				
 				
-				try {
+
 					JLabel lblOpera2 = null;
-					if(count + 1 >= pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getRowCount())
+					if(count + 1 >= pl.numeroRighe(opera.getCod(), opera.getNome()))
 						 lblOpera2 = new JLabel("");
 					else {
 						String Opera2 = "";	
-						Opera2 = String.valueOf(pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getValueAt(count + 1, 4));
+						Opera2 = pl.infoOpera(opera.getCod(), opera.getNome(), count + 1, 4);
 				
 					
 					
@@ -190,8 +184,7 @@ public class ModuloElencoPagine {
 						JButton btnOpera2 = new JButton("Opzioni");
 						btnOpera2.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent arg0) {
-								OpzioniPagina MV = new OpzioniPagina(utente, opera, count + 1);
-								MV.Opzioni(utente, opera, count +1);
+								ChangePage.changePage1("Opzioni", utente, opera, count + 1);
 								frmBibliotecaDigitale.dispose();
 							}
 						});
@@ -200,19 +193,16 @@ public class ModuloElencoPagine {
 						frmBibliotecaDigitale.getContentPane().add(btnOpera2);
 						}
 
-					
-		        } catch (SQLException e){
-		            e.printStackTrace();
-		        }
+
 				
 					
-				try {
+
 					JLabel lblOpera3 = null;
-					if(count + 2 >= pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getRowCount())
+					if(count + 2 >= pl.numeroRighe(opera.getCod(), opera.getNome()))
 						 lblOpera3 = new JLabel("");
 					else {
 						String Opera3 = "";	
-						Opera3 = String.valueOf(pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getValueAt(count + 2, 4));
+						Opera3 = pl.infoOpera(opera.getCod(), opera.getNome(), count + 2, 4);
 						
 					
 						lblOpera3 = new JLabel(Opera3);
@@ -229,8 +219,7 @@ public class ModuloElencoPagine {
 						JButton btnOpera3 = new JButton("Opzioni");
 						btnOpera3.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent arg0) {
-								OpzioniPagina MV = new OpzioniPagina(utente, opera, count +2);
-								MV.Opzioni(utente, opera, count + 2);
+								ChangePage.changePage1("Opzioni", utente, opera, count + 2);
 								frmBibliotecaDigitale.dispose();
 							}
 						});
@@ -238,19 +227,15 @@ public class ModuloElencoPagine {
 						btnOpera3.setBounds(200, 183, 400, 27);
 						frmBibliotecaDigitale.getContentPane().add(btnOpera3);
 					}	
-					
-		        } catch (SQLException e){
-		            e.printStackTrace();
-		        }
+
 				
-				
-				try {
+	
 					JLabel lblOpera4= null;
-					if(count + 3 >= pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getRowCount())
+					if(count + 3 >= pl.numeroRighe(opera.getCod(), opera.getNome()))
 						 lblOpera4  = new JLabel("");
 					else {
 						String Opera4= "";	
-						Opera4 = String.valueOf(pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getValueAt(count + 3, 4));
+						Opera4 = pl.infoOpera(opera.getCod(), opera.getNome(), count + 3, 4);
 						
 					
 					
@@ -266,8 +251,7 @@ public class ModuloElencoPagine {
 						JButton btnOpera4= new JButton("Opzioni");
 						btnOpera4.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent arg0) {
-								OpzioniPagina MV = new OpzioniPagina(utente, opera, count + 3);
-								MV.Opzioni(utente, opera, count + 3);
+								ChangePage.changePage1("Opzioni", utente, opera, count + 3);
 								frmBibliotecaDigitale.dispose();
 							}
 						});
@@ -276,22 +260,16 @@ public class ModuloElencoPagine {
 						frmBibliotecaDigitale.getContentPane().add(btnOpera4);
 					}	
 					
-					
-					
-					
-					
-		        } catch (SQLException e){
-		            e.printStackTrace();
-		        }
+
 				
 					
-				try {
+		
 					JLabel lblOpera5 = null;
-					if(count + 4 >= pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getRowCount())
+					if(count + 4 >= pl.numeroRighe(opera.getCod(), opera.getNome()))
 						lblOpera5 = new JLabel("");
 					else {
 						String Opera5= "";	
-						Opera5 = String.valueOf(pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getValueAt(count + 4, 4));
+						Opera5 = pl.infoOpera(opera.getCod(), opera.getNome(), count + 4, 4);
 						
 					
 						lblOpera5 = new JLabel(Opera5);
@@ -306,8 +284,7 @@ public class ModuloElencoPagine {
 						JButton btnOpera5 = new JButton("Opzioni");
 						btnOpera5.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent arg0) {
-								OpzioniPagina MV = new OpzioniPagina(utente, opera, count + 4);
-								MV.Opzioni(utente, opera, count + 4);
+								ChangePage.changePage1("Opzioni", utente, opera, count + 4);
 								frmBibliotecaDigitale.dispose();
 							}
 						});
@@ -322,20 +299,17 @@ public class ModuloElencoPagine {
 					btnAvanti.setBounds(447, 341, 137, 27);
 					frmBibliotecaDigitale.getContentPane().add(btnAvanti);
 					
-			        try {
-			            if (count + 5 >= pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getRowCount()) {
+		
+			            if (count + 5 >= pl.numeroRighe(opera.getCod(), opera.getNome())) {
 			            	btnAvanti.setEnabled(false);
 			            }
-			        } catch (SQLException e) {
-			            e.printStackTrace();
-			        }
+			
 			        frmBibliotecaDigitale.getContentPane().add(btnAvanti);
 					btnAvanti.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 							frmBibliotecaDigitale.dispose();
 							count = count +5;
-							ModuloElencoPagine MEP = new ModuloElencoPagine(utente, opera, count);
-							MEP.ElencoPagine(utente, opera, count);
+							ChangePage.changePage1("ElencoPagine", utente, opera, count);
 						}
 					});
 					
@@ -347,23 +321,14 @@ public class ModuloElencoPagine {
 						public void actionPerformed(ActionEvent e) {
 							count = count -5;
 							frmBibliotecaDigitale.dispose();
-							ModuloElencoPagine MEP = new ModuloElencoPagine(utente, opera, count);
-							MEP.ElencoPagine(utente, opera, count);
+							ChangePage.changePage1("ElencoPagine", utente, opera, count);
 						}
 					});
 					btnIndietro.setFont(new Font("Myriad CAD", Font.BOLD, 11));
 					btnIndietro.setBounds(23, 341, 137, 27);
 					frmBibliotecaDigitale.getContentPane().add(btnIndietro);
 					
-					
-		        } catch (SQLException e){
-		            e.printStackTrace();
-		        }	
-				
-			} //else JOptionPane.showMessageDialog(null, "Elenco Vuoto!");
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
+			}
 
 		
 		

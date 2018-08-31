@@ -9,26 +9,22 @@ import java.awt.Panel;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 
-import controller.componenti.Opera;
-import controller.componenti.Utente;
-import controller.interfaces.InterfaceOpera;
-import model.connectionDataBase.ConnectionOpera;
+import common.ChangePage;
+import common.vo.Opera;
+import common.vo.Utente;
+import controller.action.getImg;
+import controller.list.PaginaList;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class ModuloVisualizzaPaginaOpera {
 	Utente utente = null;
 	Opera opera = null;
 	int numero_pagina = 0;
-	InterfaceOpera pagine = new ConnectionOpera();
+	getImg img = new getImg();
+	PaginaList pl = new PaginaList();
 
 	
 
@@ -91,14 +87,11 @@ public class ModuloVisualizzaPaginaOpera {
 		frmBibliotecaDigitale.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmBibliotecaDigitale.getContentPane().setLayout(null);
 		
-		try {
-			cod_pagina = Integer.parseInt(String.valueOf(pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getValueAt(numero_pagina, 0)));
-			n = Integer.parseInt(String.valueOf(pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getValueAt(numero_pagina, 4)));
-			Trascrizione = String.valueOf(pagine.GetPagineOpera(opera.getCod(), opera.getNome()).getValueAt(numero_pagina, 2));
-			
-		} catch (SQLException e1){
-            e1.printStackTrace();
-        }
+		/* recupera le info relative alla pagina */
+		cod_pagina = Integer.parseInt(pl.infoOpera(opera.getCod(), opera.getNome(), numero_pagina, 0));
+		n = Integer.parseInt(pl.infoOpera(opera.getCod(), opera.getNome(), numero_pagina, 4));
+		Trascrizione = String.valueOf(pl.infoOpera(opera.getCod(), opera.getNome(), numero_pagina, 2));
+
 
 
 		
@@ -113,8 +106,7 @@ public class ModuloVisualizzaPaginaOpera {
 		JButton button = new JButton("Indietro");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				OpzioniPagina OP = new OpzioniPagina(utente, opera, numero_pagina);
-				OP.Opzioni(utente, opera, numero_pagina);
+				ChangePage.changePage1("Opzioni", utente, opera, numero_pagina);
 				frmBibliotecaDigitale.dispose();
 			}
 		});
@@ -138,71 +130,12 @@ public class ModuloVisualizzaPaginaOpera {
 		lblPagina.setBounds(398, 33, 168, 14);
 		frmBibliotecaDigitale.getContentPane().add(lblPagina);
 		
-		 try {
-			 
-			 Panel panel = new Panel();
-			 
-             // Image name
-             String imgName = "propic";
-             String imgDir = "./src/img/";
-
-             // Image path
-             String imgPath = imgDir + imgName;
-             File propicDir = new File(imgPath);
-
-             pagine.GetImgPagina(cod_pagina, imgPath);
-
-             File imgFile = new File(imgPath);
-             String ext = null;
-             
-             try {
-             	ext = controller.componenti.Component.TipoImmagine(imgFile);
-             } catch (IOException e1) {
-                 e1.printStackTrace();
-             }
-
-
-             if (ext.equals("JPEG")) {
-            	 ext = "jpg";
-             } else if (ext.equals("png")) {
-            	 ext = "png";
-             } else if (ext.equals("gif")) {
-            	 ext = "gif";
-             }
-             
-             imgPath = imgPath + ext;
-             
-             pagine.GetImgPagina(cod_pagina, imgPath);
-             
-             BufferedImage Immagine = null;
-             
-             try {
-
-            	 Immagine = ImageIO.read(new File(imgPath));
-
-                 JLabel lblImg = new JLabel(new ImageIcon(Immagine));
-                 panel.add(lblImg);
-
-             } catch (IOException e) {
-                 e.printStackTrace();
-             }
-             
-             panel.setBounds(302, 54, 286, 271);
-             frmBibliotecaDigitale.getContentPane().add(panel);
-
-             // Delete the files
-             File directory = new File(imgDir);
-             for(File f: directory.listFiles())
-                 if(f.getName().startsWith("propi"))
-                     f.delete();
-
-             propicDir.delete();
-             
-             
-			 
-		 } catch (SQLException e) {
-	            e.printStackTrace();
-	     }
+		
+		/* Pannello riguardante l'immagine */
+		Panel panel = new Panel();
+		panel = img.getImmagine(cod_pagina);
+		panel.setBounds(302, 54, 286, 271);
+		frmBibliotecaDigitale.getContentPane().add(panel);
 
 	}
 

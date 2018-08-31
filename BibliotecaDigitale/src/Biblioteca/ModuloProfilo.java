@@ -4,19 +4,21 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-import controller.componenti.Utente;
-import controller.interfaces.InterfaceUser;
 import model.connectionDataBase.User;
+import model.interfaces.InterfaceUser;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+
+import common.ChangePage;
+import common.vo.Utente;
 
 import java.awt.Font;
-import javax.swing.JTextField;
+
+import controller.action.ActionDeleteProfile;
+
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class ModuloProfilo {
@@ -73,6 +75,9 @@ public class ModuloProfilo {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		ActionDeleteProfile call = new ActionDeleteProfile();
+		
 		frmProfilo = new JFrame();
 		frmProfilo.setTitle("Bibilioteca Digitale - Profilo");
 		frmProfilo.setResizable(false);
@@ -170,10 +175,9 @@ public class ModuloProfilo {
 		
 		JButton Indietro = new JButton("Indietro");
 		Indietro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frmProfilo.dispose();
-				ModuloLoggato ML = new ModuloLoggato(utente);
-				ML.Loggato(utente);
+			public void actionPerformed(ActionEvent e) {				
+				ChangePage.changePage("ModuloLoggato", utente);
+				frmProfilo.dispose();				
 			}
 		});
 		Indietro.setToolTipText("Ritorna alla schermata di Login");
@@ -183,17 +187,8 @@ public class ModuloProfilo {
 		
 		JButton btnModifica = new JButton("Modifica");
 		btnModifica.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("QUI");
-				System.out.println("QUI1");
-			//	ModuloModificaProfilo MMP = new ModuloModificaProfilo(utente);
-			//	MMP.Modifica(utente);
-				
-				ModuloModificaProfilo MM = new ModuloModificaProfilo(utente);
-				MM.Modifica(utente);
-
-				
-				
+			public void actionPerformed(ActionEvent e) {				
+				ChangePage.changePage("ModificaProfilo", utente);
 				frmProfilo.dispose();
 			}
 		});
@@ -202,12 +197,12 @@ public class ModuloProfilo {
 		btnModifica.setBounds(289, 215, 215, 36);
 		frmProfilo.getContentPane().add(btnModifica);
 		
+		/* Pulsante di Logout */
 		JButton Logout = new JButton("Logout");
 		Logout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmProfilo.dispose();
-				BibliotecaDigitale BD = new BibliotecaDigitale();
-				BD.LoginPage();
+				ChangePage.Login();
 			}
 		});
 		Logout.setToolTipText("Ritorna alla schermata di Login");
@@ -215,21 +210,13 @@ public class ModuloProfilo {
 		Logout.setBounds(289, 344, 215, 36);
 		frmProfilo.getContentPane().add(Logout);
 		
+		/* Cancellazione profilo */
 		JButton btnCancellaProfilo = new JButton("Cancella profilo");
 		btnCancellaProfilo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					if(u.DeleteUser(utente.getUsername())) {
-						frmProfilo.dispose();
-						JOptionPane.showMessageDialog(frmProfilo, "Il tuo Account è stato eliminato ! :D");
-						BibliotecaDigitale BD = new BibliotecaDigitale();
-						BD.LoginPage();
-					}
-				}	catch (SQLException e2) {
-				e2.printStackTrace();
-				}
-				
+				call.DeleteUser(utente.getUsername());
+				frmProfilo.dispose();
+				ChangePage.Login();
 			}
 		});
 		btnCancellaProfilo.setForeground(Color.RED);

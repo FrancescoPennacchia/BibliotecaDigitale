@@ -10,18 +10,17 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import common.ChangePage;
+import controller.action.ActionRegistrazione;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.sql.SQLException;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
-import controller.interfaces.InterfaceUser;
 import exception.Exception;
-import model.connectionDataBase.User;
+
 
 
 public class ModuloRegistrazione {
@@ -74,8 +73,9 @@ public class ModuloRegistrazione {
 	 */
 	private void initialize() {
 		
-		//Var
-		InterfaceUser utente = new User();
+
+		ActionRegistrazione call = new ActionRegistrazione();
+
 		
 		frmBibliotecaDigitale = new JFrame();
 		frmBibliotecaDigitale.setTitle("Biblioteca Digitale - Registrazione");
@@ -87,8 +87,7 @@ public class ModuloRegistrazione {
 		JButton btnIndietro = new JButton("Indietro");
 		btnIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BibliotecaDigitale BD = new BibliotecaDigitale();
-				BD.LoginPage();
+				ChangePage.Login();
 				frmBibliotecaDigitale.dispose();
 			}
 		});
@@ -225,41 +224,12 @@ public class ModuloRegistrazione {
 		JButton btnNewButton = new JButton("Registrati");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		
-			
-				try {
-					
-	                    String Data = txtDataDiNascita.getText();
-	                    String passText = new String(passwordField.getPassword());
+                String Data = txtDataDiNascita.getText();
+                String passText = new String(passwordField.getPassword());
 
-	                    
-	                  
-
-	                    // Controllo Formato data
-	                    if (Data.matches("\\d{2}/\\d{2}/\\d{4}")) {
-	                    	Data = Data.replaceAll("/", "-");
-	                    }
-	                    
-	                    if (!Data.matches("\\d{2}-\\d{2}-\\d{4}")) {
-	                        throw new Exception("Formato data non valido!");
-	                    }
-	                    
-	         
-	                    if (utente.NewUser(txtUsername.getText(), passText, txtEmail.getText(), txtNome.getText(), txtCognome.getText(), Data, txtTitolodistudi.getText(), txtProfessione.getText(), txtResidenza.getText())) {
-	                        JOptionPane.showMessageDialog(null, "Registrato con successo");
-	                    } else  
-	                    	JOptionPane.showMessageDialog(null, "Errore DB");
-	                      
-	                      
-	                    frmBibliotecaDigitale.dispose();
-	                    BibliotecaDigitale BD = new BibliotecaDigitale();
-	                    BD.LoginPage();
-	                
-					
-				} catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
-			}
+	            call.Registrazione(txtUsername.getText(), passText, txtEmail.getText(), txtNome.getText(), txtCognome.getText(), Data, txtTitolodistudi.getText(), txtProfessione.getText(), txtResidenza.getText());				
+				frmBibliotecaDigitale.dispose();
+			}			
 		});
 		btnNewButton.setFont(new Font("Myriad CAD", Font.BOLD, 11));
 		btnNewButton.setBounds(432, 342, 125, 38);

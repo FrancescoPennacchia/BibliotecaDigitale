@@ -4,15 +4,16 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-import controller.componenti.Utente;
-import controller.interfaces.InterfaceOpera;
-import model.connectionDataBase.ConnectionOpera;
-
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+
+import common.ChangePage;
+import common.vo.Utente;
+import controller.action.ActionAddOpera;
+
 import javax.swing.JButton;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -21,7 +22,8 @@ import java.awt.event.ActionEvent;
 
 public class ModuloAggiungiOpera {
 	Utente utente = null;
-	InterfaceOpera opera = new ConnectionOpera();
+	
+	ActionAddOpera ao = new ActionAddOpera();
 
 	private JFrame frmBibliotecaDigitale;
 	private JTextField txtNome;
@@ -189,13 +191,7 @@ public class ModuloAggiungiOpera {
 		JButton btnInserisci_1 = new JButton("Inserisci");
 		btnInserisci_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String anno = txtAnno.getText();
-					int a = Integer.parseInt(anno);
-					opera.NewOpera(txtNome.getText(), txtNomeAutore.getText(), a, txtCategoria.getText());
-				}   catch (Exception e1) {
-					e1.printStackTrace();
-				}
+				ao.addOpera(txtNome.getText(), txtNomeAutore.getText(), txtAnno.getText(),txtCategoria.getText());
 			}
 		});
 		btnInserisci_1.setFont(new Font("Myriad CAD", Font.BOLD, 11));
@@ -205,8 +201,7 @@ public class ModuloAggiungiOpera {
 		JButton btnInserisci = new JButton("Indietro");
 		btnInserisci.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TipoRicerca TR = new TipoRicerca(utente);
-				TR.Ricerca(utente);
+				ChangePage.changePage("TipoRicerca", utente);
 				frmBibliotecaDigitale.dispose();
 			}
 		});

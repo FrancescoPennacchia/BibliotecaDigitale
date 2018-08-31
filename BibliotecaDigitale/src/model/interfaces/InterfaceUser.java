@@ -1,10 +1,10 @@
-package controller.interfaces;
+package model.interfaces;
 
 import java.sql.SQLException;
 
 import javax.swing.table.TableModel;
 
-import controller.componenti.Utente;
+import common.vo.Utente;
 
 public interface InterfaceUser {
 		

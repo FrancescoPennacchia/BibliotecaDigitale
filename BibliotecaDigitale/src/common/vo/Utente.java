@@ -1,4 +1,4 @@
-package controller.componenti;
+package common.vo;
 
 import java.sql.Date;
 

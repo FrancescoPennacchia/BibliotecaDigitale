@@ -5,24 +5,23 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-import controller.componenti.Utente;
-import controller.interfaces.InterfaceUser;
-import model.connectionDataBase.User;
-
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+
+import common.ChangePage;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.Color;
+
+import controller.action.ActionLogin;
 
 public class BibliotecaDigitale {
 
@@ -73,8 +72,8 @@ public class BibliotecaDigitale {
 	private void initialize() {
 		
 		
-		//Var
-		InterfaceUser utente = new User();
+
+		ActionLogin call = new ActionLogin();
 		
 		frmLoginBiblioteca = new JFrame();
 		frmLoginBiblioteca.setTitle("Biblioteca Digitale - Login");
@@ -120,28 +119,16 @@ public class BibliotecaDigitale {
 		lblPassword.setBounds(252, 194, 119, 14);
 		frmLoginBiblioteca.getContentPane().add(lblPassword);
 		
+		
+		/* PULSANTE DI LOGIN */
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				 String GetPassText = new String (passwordField.getPassword());
-				
-				 try {
-					 	//System.out.println("Qui");
-						if(utente.UserLogin(usernameField.getText(), GetPassText)){
-							JOptionPane.showMessageDialog(frmLoginBiblioteca,"Loggato");
-							Utente ut = utente.GetUtente(usernameField.getText());
-							ModuloLoggato Log = new ModuloLoggato(ut);
-							Log.Loggato(ut);
-							frmLoginBiblioteca.dispose();
-						}
-						else
-							JOptionPane.showMessageDialog(frmLoginBiblioteca,"Username o password errati!");
-				 }
-                catch (SQLException e) {
-                e.printStackTrace();
-            }
-				
+				 
+				 if(call.UserLogin(usernameField.getText(), GetPassText))
+					 frmLoginBiblioteca.dispose();			  
 			}
 		});
 		
@@ -152,8 +139,7 @@ public class BibliotecaDigitale {
 		JButton btnRegistrati = new JButton("Registrati");
 		btnRegistrati.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ModuloRegistrazione Reg = new ModuloRegistrazione();
-				Reg.Registrazione();
+				ChangePage.Registrazione();
 				frmLoginBiblioteca.dispose();
 			}
 		});

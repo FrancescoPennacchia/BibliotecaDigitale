@@ -4,7 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-import controller.componenti.Utente;
+import common.ChangePage;
+import common.vo.Utente;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -71,8 +72,7 @@ public class TipoRicerca {
 		JButton btnListaOpere = new JButton("Tutte le opere");
 		btnListaOpere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ModuloListaOpere MLO = new ModuloListaOpere(utente, 0);
-				MLO.ElencoOpere(utente, 0);
+				ChangePage.changePage("TutteLeOpere", utente);
 				frmTipoRicerca.dispose();
 			}
 		});
@@ -83,8 +83,7 @@ public class TipoRicerca {
 		JButton btnOperePerCategoria = new JButton("Categorie");
 		btnOperePerCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ModuloRicercaCategoria MRC = new ModuloRicercaCategoria(utente, 0);
-				MRC.RicercaCategoria(utente, 0);
+				ChangePage.changePage("Categoria", utente);
 				frmTipoRicerca.dispose();
 			}
 		});
@@ -95,8 +94,7 @@ public class TipoRicerca {
 		JButton btnIndietro = new JButton("Indietro");
 		btnIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ModuloLoggato ML = new ModuloLoggato(utente);
-				ML.Loggato(utente);
+				ChangePage.changePage("ModuloLoggato", utente);
 				frmTipoRicerca.dispose();
 			}
 		});

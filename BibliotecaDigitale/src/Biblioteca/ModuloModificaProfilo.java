@@ -5,7 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -13,22 +13,22 @@ import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+
+import common.ChangePage;
+import common.vo.Utente;
+
 import javax.swing.JPasswordField;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.sql.SQLException;
-import java.text.ParseException;
 
-import controller.componenti.Utente;
-import controller.interfaces.InterfaceUser;
+
 import exception.Exception;
-import model.connectionDataBase.User;
+import controller.action.ActionModificaProfilo;
 
 public class ModuloModificaProfilo {
 
 	Utente utente = null;
-	//String s = Componenti.Component.dateToString(utente.getData());
-	InterfaceUser u= new User();
+	ActionModificaProfilo call = new ActionModificaProfilo();
 	
 	private JFrame frmModificaProfilo;
 	
@@ -103,8 +103,7 @@ public class ModuloModificaProfilo {
 		JButton btnIndietro = new JButton("Indietro");
 		btnIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ModuloLoggato ML = new ModuloLoggato(utente);
-				ML.Loggato(utente);
+				ChangePage.changePage("ModuloLoggato", utente);
 				frmModificaProfilo.dispose();
 			}
 		});
@@ -331,61 +330,12 @@ public class ModuloModificaProfilo {
 		JButton btnModifica = new JButton("Modifica");
 		btnModifica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			 try {
 				String pass= new String(passwordField.getPassword());
-                String email = utente.getEmail();
-                String user = utente.getUsername();
-                String nome = utente.getNome();
-                String cognome = utente.getCognome();
-                String studi = utente.getTitoloDiStudi();
-                String professione = utente.getProfessione();
-                String residenza = utente.getResidenza();
-                
 
-                /* Controllo se ci sono state modifiche*/
-                if (txtNome.getText().equals(nome) && txtCognome.getText().equals(cognome)
-                        && txtEmail.getText().equals(email) &&
-                        txtUsername.getText().equals(user) && pass.equals(utente.getPassword()) && txtTitoloDiStudi.getText().equals(studi) && TxtProfessione.getText().equals(professione)
-                        && txtResidenza.getText().equals(residenza))  {
-                	JOptionPane.showMessageDialog(frmModificaProfilo,"Non sono state fatte modifiche!");
-                    throw new Exception("Non sono state fatte modifiche!");
-                }
-
-
-                if (pass.length() == 0) {
-                	  JOptionPane.showMessageDialog(frmModificaProfilo,"Inserisci una password!");
-                      throw new Exception("Inserire la Password");
-                 }
-                
-
-
-                
-                
-                if (!txtNome.getText().equals(nome) || !txtCognome.getText().equals(cognome)
-                        || !txtEmail.getText().equals(email) ||
-                        !txtUsername.getText().equals(user) || !pass.equals("") || !txtTitoloDiStudi.getText().equals(studi) || !TxtProfessione.getText().equals(professione)
-                        || !txtResidenza.getText().equals(residenza)) {
-                    Utente NuovoUtente = new Utente();
-                    
-                    NuovoUtente = new Utente(utente.getId(), user, pass, nome, cognome, email, utente.getMansione(), utente.getData(), studi, residenza, professione);
-                        
-                    u.SetUtente(NuovoUtente, pass);
-                        
-                    BibliotecaDigitale BD = new BibliotecaDigitale();
-                    BD.LoginPage();
-                    frmModificaProfilo.dispose();
-
-                    
-                    JOptionPane.showMessageDialog(frmModificaProfilo, "Modifiche effettuate");
-                } else {
-                    throw new Exception("Errore DB");
-                }
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-			
-
-		}
+				call.Modifica(utente, txtUsername.getText(), txtNome.getText(), txtCognome.getText(), txtTitoloDiStudi.getText(), TxtProfessione.getText(), txtResidenza.getText(), txtEmail.getText(), pass);
+				frmModificaProfilo.dispose();
+				ChangePage.Login();
+			}
 		});
 			
 		

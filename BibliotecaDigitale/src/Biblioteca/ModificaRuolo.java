@@ -4,20 +4,21 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 
-import controller.componenti.Utente;
-import controller.interfaces.InterfaceUser;
+import common.ChangePage;
+import common.vo.Utente;
+import controller.action.ActionChangeRuolo;
 import model.connectionDataBase.User;
+import model.interfaces.InterfaceUser;
+
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -76,6 +77,7 @@ public class ModificaRuolo {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		ActionChangeRuolo call = new ActionChangeRuolo();
 		frmModificaRuoli = new JFrame();
 		frmModificaRuoli.setResizable(false);
 		frmModificaRuoli.setTitle("Biblioteca Digitale - Modifica Ruoli Utente");
@@ -112,20 +114,13 @@ public class ModificaRuolo {
 		JButton btnConferma = new JButton("Conferma");
 		btnConferma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String ruolo = txtNuovoRuolo.getText();
-					if(ruolo.equals("admin") || ruolo.equals("utente") || ruolo.equals("menager") || ruolo.equals("uploader") || ruolo.equals("transcriver")) {
-						us.setRuolo(username, ruolo);
-						frmModificaRuoli.dispose();
-						ModuloListaUtenti MLU = new ModuloListaUtenti(UtentePrecedente, 0);
-						MLU.ListaUtenti(UtentePrecedente, 0);					
-					}
-					else
-						JOptionPane.showMessageDialog(null, "Inserire un ruolo corretto (admin - utente - menager - uploader - transcriber)");
-		        } catch (SQLException e1){
-		            e1.printStackTrace();
-		        }
+				String ruolo = txtNuovoRuolo.getText();
+				call.ChangeRuolo(username, ruolo);
+				frmModificaRuoli.dispose();
+				ChangePage.ListaUtenti(UtentePrecedente, 0);
 			}
+			
+			
 		});
 		btnConferma.setFont(new Font("Myriad CAD", Font.BOLD, 11));
 		btnConferma.setBounds(238, 225, 108, 36);
@@ -135,8 +130,7 @@ public class ModificaRuolo {
 		btnAnnulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmModificaRuoli.dispose();
-				ModuloListaUtenti MLU = new ModuloListaUtenti(UtentePrecedente, 0);
-				MLU.ListaUtenti(UtentePrecedente, 0);	
+				ChangePage.ListaUtenti(UtentePrecedente, 0);	
 			}
 		});
 		btnAnnulla.setFont(new Font("Myriad CAD", Font.BOLD, 11));
