@@ -132,6 +132,7 @@ public class ModuloElencoPagine {
 				/* lisa opere */ //Nome Anno Autore
 		
 					String opera1 = pl.infoOpera(opera.getCod(), opera.getNome(), count, 4); // RIGA - COLONNA
+					//int pagina1 = Integer.parseInt(pl.infoOpera(opera.getCod(), opera.getNome(), count, 0));
 					
 					
 					

@@ -105,8 +105,9 @@ public class ModuloListaUtenti {
 		/* Pirmo utente */
 				
 		
-			String user1 = "";
+			String user1, userM1 = "";
 			user1 = call.UsernameUser(count, 1); // RIGA - COLONNA
+			userM1 = call.UsernameUser(count, 10);
 			
 			JPanel panel = new JPanel();
 			JLabel lblUser1 = new JLabel(user1);
@@ -130,9 +131,30 @@ public class ModuloListaUtenti {
 			btnRuolo.setFont(new Font("Myriad CAD", Font.BOLD, 11));
 			btnRuolo.setBounds(368, 75, 154, 27);
 			frmListaUtenti.getContentPane().add(btnRuolo);
+			
+			JButton btnLv = new JButton("Livello");
+			btnLv.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+
+						String User = call.UsernameUser(count, 1);
+						int n = Integer.parseInt(call.UsernameUser(count, 0));
+						
+						ChangePage.LvPage(utente, User, n);
+						frmListaUtenti.dispose();	
+				}
+			});
+			btnLv.setFont(new Font("Myriad CAD", Font.BOLD, 11));
+			btnLv.setBounds(210, 75, 154, 27);
+			frmListaUtenti.getContentPane().add(btnLv);
 		
 		
-		
+			
+			if(userM1.equals("transcriber") || userM1.equals("trascrittore") || userM1.equals("admin")) {
+				btnLv.setEnabled(true);
+			}
+			else {
+				btnLv.setEnabled(false);
+			}
 		
 				
 		
@@ -142,8 +164,9 @@ public class ModuloListaUtenti {
 			if(count + 1 >= call.NumeroRighe())
 				 lblUser2 = new JLabel("");
 			else {
-				String user2 = "";	
+				String user2, userM2 = "";	
 				user2 = call.UsernameUser(count + 1, 1);
+				userM2 = call.UsernameUser(count + 1, 10);
 			
 			
 				lblUser2 = new JLabel(user2);
@@ -166,6 +189,31 @@ public class ModuloListaUtenti {
 				btnRuolo2.setFont(new Font("Myriad CAD", Font.BOLD, 11));
 				btnRuolo2.setBounds(368, 129, 154, 27);
 				frmListaUtenti.getContentPane().add(btnRuolo2);
+				
+				JButton btnLv2 = new JButton("Livello");
+				btnLv2.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+
+							String User = call.UsernameUser(count + 1, 1);
+							int n = Integer.parseInt(call.UsernameUser(count + 1, 0));
+						
+							ChangePage.LvPage(utente, User, n);
+							frmListaUtenti.dispose();	
+					}
+				});
+				btnLv2.setFont(new Font("Myriad CAD", Font.BOLD, 11));
+				btnLv2.setBounds(210, 129, 154, 27);
+				frmListaUtenti.getContentPane().add(btnLv2);
+				
+				if(userM2.equals("transcriber") || userM2.equals("trascrittore") || userM2.equals("admin")) {
+					btnLv2.setEnabled(true);
+				}
+				else {
+					btnLv2.setEnabled(false);
+				}
+			
+				
+				
 			}	
 			
 
@@ -178,9 +226,10 @@ public class ModuloListaUtenti {
 			if(count + 2 >= call.NumeroRighe())
 				 lblUser3 = new JLabel("");
 			else {
-				String user3 = "";	
+				String user3, userM3 = "";	
 				user3 = call.UsernameUser(count + 2, 1);
-			
+				userM3 = call.UsernameUser(count + 2, 10);
+				//System.out.println(userM3);
 			
 				lblUser3 = new JLabel(user3);
 				lblUser3.setHorizontalAlignment(SwingConstants.CENTER);
@@ -203,6 +252,29 @@ public class ModuloListaUtenti {
 				btnRuolo3.setFont(new Font("Myriad CAD", Font.BOLD, 11));
 				btnRuolo3.setBounds(368, 183, 154, 27);
 				frmListaUtenti.getContentPane().add(btnRuolo3);
+				
+				JButton btnLv3 = new JButton("Livello");
+				btnLv3.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+
+							String User = call.UsernameUser(count + 2, 1);
+							int n = Integer.parseInt(call.UsernameUser(count + 2, 0));
+							
+							ChangePage.LvPage(utente, User, n);
+							frmListaUtenti.dispose();	
+					}
+				});
+				btnLv3.setFont(new Font("Myriad CAD", Font.BOLD, 11));
+				btnLv3.setBounds(210, 183, 154, 27);
+				frmListaUtenti.getContentPane().add(btnLv3);
+				
+				if(userM3.equals("transcriber") || userM3.equals("trascrittore") || userM3.equals("admin")) {
+					btnLv3.setEnabled(true);
+				}
+				else {
+					btnLv3.setEnabled(false);
+				}
+			
 			}	
 
 		
@@ -212,8 +284,9 @@ public class ModuloListaUtenti {
 			if(count + 3 >= call.NumeroRighe())
 				 lblUser4 = new JLabel("");
 			else {
-				String user4 = "";	
+				String user4, userM4 = "";	
 				user4 = call.UsernameUser(count + 3, 1);
+				userM4 = call.UsernameUser(count + 3, 10);
 			
 			
 				lblUser4 = new JLabel(user4);
@@ -236,6 +309,28 @@ public class ModuloListaUtenti {
 				btnRuolo4.setFont(new Font("Myriad CAD", Font.BOLD, 11));
 				btnRuolo4.setBounds(368, 237, 154, 27);
 				frmListaUtenti.getContentPane().add(btnRuolo4);
+				
+				JButton btnLv4 = new JButton("Livello");
+				btnLv4.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+
+							String User = call.UsernameUser(count + 3, 1);
+							int n = Integer.parseInt(call.UsernameUser(count + 3, 0));
+						
+							ChangePage.LvPage(utente, User, n);
+							frmListaUtenti.dispose();	
+					}
+				});
+				btnLv4.setFont(new Font("Myriad CAD", Font.BOLD, 11));
+				btnLv4.setBounds(210, 237, 154, 27);
+				frmListaUtenti.getContentPane().add(btnLv4);
+				
+				if(userM4.equals("transcriber") || userM4.equals("trascrittore") || userM4.equals("admin")) {
+					btnLv4.setEnabled(true);
+				}
+				else {
+					btnLv4.setEnabled(false);
+				}
 			}	
 
 		
@@ -245,8 +340,9 @@ public class ModuloListaUtenti {
 			if(count + 4 >= call.NumeroRighe())
 				 lblUser5 = new JLabel("");
 			else {
-				String user5 = "";	
+				String user5, userM5 = "";	
 				user5 = call.UsernameUser(count + 4, 1);
+				userM5 = call.UsernameUser(count + 4, 10);
 			
 			
 				lblUser5 = new JLabel(user5);
@@ -269,6 +365,29 @@ public class ModuloListaUtenti {
 				btnRuolo5.setFont(new Font("Myriad CAD", Font.BOLD, 11));
 				btnRuolo5.setBounds(368, 291, 154, 27);
 				frmListaUtenti.getContentPane().add(btnRuolo5);
+				
+				
+				JButton btnLv5 = new JButton("Livello");
+				btnLv5.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+
+							String User = call.UsernameUser(count + 4, 1);
+							int n = Integer.parseInt(call.UsernameUser(count + 4, 0));
+						
+							ChangePage.LvPage(utente, User, n);
+							frmListaUtenti.dispose();	
+					}
+				});
+				btnLv5.setFont(new Font("Myriad CAD", Font.BOLD, 11));
+				btnLv5.setBounds(210, 291, 154, 27);
+				frmListaUtenti.getContentPane().add(btnLv5);
+				
+				if(userM5.equals("transcriber") || userM5.equals("trascrittore") || userM5.equals("admin")) {
+					btnLv5.setEnabled(true);
+				}
+				else {
+					btnLv5.setEnabled(false);
+				}
 			}	
 			
 			

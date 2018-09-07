@@ -259,10 +259,11 @@ public class ConnectionOpera implements InterfaceOpera {
             FileInputStream fin  = new FileInputStream(imgfile);
 
          
-            PreparedStatement pre = connect.prepareStatement("INSERT INTO pagine_opera" + "(immagine_pagina, cod_opera, numero_pagina) VALUES (?,?,?)");
+            PreparedStatement pre = connect.prepareStatement("INSERT INTO pagine_opera" + "(immagine_pagina, cod_opera, numero_pagina, approvata) VALUES (?,?,?,?)");
 
             pre.setInt(2,Cod);
             pre.setInt(3, numero_pagina);
+            pre.setString(4, "no");
 
             pre.setBinaryStream(1,(InputStream)fin,(int)imgfile.length());
             pre.executeUpdate();
@@ -376,5 +377,105 @@ public class ConnectionOpera implements InterfaceOpera {
        }
        return false;
    }
+    
+   /* assegnamento di una trascrizione */ 
+    public boolean assegnaTrascrizione(String username, int cod_pagina) throws SQLException{
+    	
+        Connection dbConnection = model.connectionDataBase.ConnectionDB.Connect();
+        int cod = 0;
+        
+        /* recuepra id trascrittore */
+        PreparedStatement stmt = dbConnection.prepareStatement("SELECT cod_trascrittore FROM trascrittore INNER JOIN utente ON trascrittore.cod_trascrittore = utente.id WHERE  username = ? "); //potrebbe dare problemi controllare
+        stmt.setString(1, username);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+        	cod = rs.getInt("cod_trascrittore");
+        }
+       
+        
+        
+        /* inserisce in trascrittori */
+        String approveReview = "UPDATE `pagine_opera` SET `cod_trascrittore` = ?, `approvata` = ? WHERE `cod_pagina` = ? ";
+        PreparedStatement preparedStatement = null;  //UPDATE `pagine_opera` SET `approvata` = ? WHERE `cod_pagina` = ?
+
+        // Insert the values into the DB
+        try {
+            preparedStatement = dbConnection.prepareStatement(approveReview);
+
+            preparedStatement.setInt(1, cod);
+            preparedStatement.setString(2, "no");
+            preparedStatement.setInt(3, cod_pagina);
+            
+            
+            if (preparedStatement.executeUpdate() != 0) {
+                return true;
+            }
+
+        
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+
+        } finally {
+            if (stmt != null) { //Ric
+                stmt.close();
+            }
+            
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+
+            if (dbConnection != null) {
+                dbConnection.close();
+            }
+        }
+    	return false;	
+    }
+   
+    /* approvazione della trascrizione */
+    public boolean approvaTrascrizione(int cod_pagina) throws SQLException {
+    	 Connection dbConnection = model.connectionDataBase.ConnectionDB.Connect();
+    	
+    	 String approveReview = "UPDATE `pagine_opera` SET `approvata` = ? WHERE `cod_pagina` = ? ";
+         PreparedStatement preparedStatement = null;  //UPDATE `pagine_opera` SET `approvata` = ? WHERE `cod_pagina` = ?
+
+         // Insert the values into the DB
+         try {
+             preparedStatement = dbConnection.prepareStatement(approveReview);
+
+             
+             preparedStatement.setString(1, "approvata");
+             preparedStatement.setInt(2, cod_pagina);
+             
+             
+             if (preparedStatement.executeUpdate() != 0) {
+                 return true;
+             }
+
+         
+
+         } catch (SQLException ex) {
+             System.out.println(ex.getMessage());
+
+         } finally {
+             
+             if (preparedStatement != null) {
+                 preparedStatement.close();
+             }
+
+             if (dbConnection != null) {
+                 dbConnection.close();
+             }
+         }
+    	
+    	
+    	
+    	return false;
+    	
+    }
+    
+
+        
 
 }

@@ -1,5 +1,6 @@
 package controller.action;
 
+
 import model.connectionDataBase.ConnectionOpera;
 import model.interfaces.InterfaceOpera;
 
@@ -9,6 +10,7 @@ public class ActionAddCategoria {
 	public void addCat(String cat) {
 		try {
 			opera.NewCategoria(cat);
+			
 			//frmBibliotecaDigitale.di
 		} catch (Exception e) {
 			e.printStackTrace();

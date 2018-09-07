@@ -13,6 +13,7 @@ import common.ChangePage;
 import common.vo.Opera;
 import common.vo.Utente;
 import controller.action.getImg;
+import controller.action.ActionApprova;
 import controller.list.PaginaList;
 
 import javax.swing.JButton;
@@ -22,9 +23,10 @@ import java.awt.event.ActionEvent;
 public class ModuloVisualizzaPaginaOpera {
 	Utente utente = null;
 	Opera opera = null;
-	int numero_pagina = 0;
+	int numero_pagina;
 	getImg img = new getImg();
 	PaginaList pl = new PaginaList();
+	ActionApprova ap = new ActionApprova();
 
 	
 
@@ -112,7 +114,7 @@ public class ModuloVisualizzaPaginaOpera {
 		});
 		button.setToolTipText("Ritorna alla schermata di Login");
 		button.setFont(new Font("Myriad CAD", Font.BOLD, 11));
-		button.setBounds(192, 336, 215, 36);
+		button.setBounds(26, 336, 215, 36);
 		frmBibliotecaDigitale.getContentPane().add(button);
 		
 		JLabel lblTrascrizione_1 = new JLabel("Trascrizione Pagina");
@@ -136,7 +138,24 @@ public class ModuloVisualizzaPaginaOpera {
 		panel = img.getImmagine(cod_pagina);
 		panel.setBounds(302, 54, 286, 271);
 		frmBibliotecaDigitale.getContentPane().add(panel);
+		
+		JButton btnApprova = new JButton("Approva");
+		btnApprova.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int n = Integer.parseInt(pl.infoOpera(opera.getCod(), opera.getNome(), numero_pagina, 0));
+				ap.appovazione(n);
+			}
+		});
+		btnApprova.setToolTipText("Ritorna alla schermata di Login");
+		btnApprova.setFont(new Font("Myriad CAD", Font.BOLD, 11));
+		btnApprova.setBounds(362, 336, 215, 36);
+		frmBibliotecaDigitale.getContentPane().add(btnApprova);
+		
+		// inserire permessi
 
+		if(utente.getMansione().equals("admin") || utente.getMansione().equals("manager"))
+			btnApprova.setEnabled(true);
+		else
+			btnApprova.setEnabled(false);
 	}
-
 }

@@ -16,6 +16,8 @@ import Biblioteca.ModuloProfilo;
 import Biblioteca.ModuloRegistrazione;
 import Biblioteca.ModuloRicercaCategoria;
 import Biblioteca.ModuloVisualizzaPaginaOpera;
+import Biblioteca.ModuloLivello;
+import Biblioteca.ModuloAssegnaTrascrizione;
 import Biblioteca.OpzioniPagina;
 import Biblioteca.TipoRicerca;
 import common.vo.Opera;
@@ -125,6 +127,11 @@ public class ChangePage {
     		MVCC.AggiungiTrascrizione(utente, opera, n);
     	break;
     	
+    	case "setTrascrittore":
+    		ModuloAssegnaTrascrizione MAT = new ModuloAssegnaTrascrizione(utente, opera, n);
+    		MAT.trascrizione(utente, opera, n);
+    	break;
+    	
         }
 	}
 	
@@ -142,6 +149,11 @@ public class ChangePage {
 	public static void ChangeRuolo(String s, Utente OldUtente) {
 		ModificaRuolo MR = new ModificaRuolo(s, OldUtente);
 		MR.Ruolo(s, OldUtente);
+	}
+	
+	public static void LvPage(Utente u, String username, int n) {
+		ModuloLivello ml = new ModuloLivello(u , n, username);
+		ml.Livello(u, n, username);
 	}
 	
 	public static void ListaUtenti(Utente u, int n) {

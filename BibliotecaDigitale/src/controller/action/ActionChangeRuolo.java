@@ -14,8 +14,13 @@ public class ActionChangeRuolo {
 		
 		try {
 			
-			if(ruolo.equals("admin") || ruolo.equals("utente") || ruolo.equals("menager") || ruolo.equals("uploader") || ruolo.equals("transcriver")) {
+			if(ruolo.equals("admin") || ruolo.equals("utente") || ruolo.equals("menager") || ruolo.equals("uploader") || ruolo.equals("transcriber")) {
 				us.setRuolo(username, ruolo);
+				
+				//visionare questa parte
+				if(ruolo.equals("transcriber") || ruolo.equals("admin")) {
+					us.setTrascrittore(username);
+				}
 				
 			}
 			else

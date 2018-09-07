@@ -42,5 +42,11 @@ public interface InterfaceOpera {
     /* Delete Opera */
     public boolean DeleteOpera(int cod) throws SQLException;
 	
+    /* approvazione di un a trascrizione */
+    public boolean approvaTrascrizione(int cod_pagina) throws SQLException;
+    
+    
+    /* assegnazione trascrizione a un trascriber */
+    public boolean assegnaTrascrizione(String username, int cod_pagina) throws SQLException;
 
 }

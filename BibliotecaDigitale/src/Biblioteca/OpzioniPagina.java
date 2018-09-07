@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import common.ChangePage;
 import common.vo.Opera;
 import common.vo.Utente;
+import controller.list.PaginaList;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -18,6 +19,8 @@ public class OpzioniPagina {
 	Utente utente = null;
 	Opera opera = null;
 	int numero_pagina = 0;
+	//OperaList ol = new OperaList();
+	PaginaList pl = new PaginaList();
 
 	private JFrame frmBibliotecaDigitale;
 
@@ -68,6 +71,10 @@ public class OpzioniPagina {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		String approvazione = "";
+		approvazione = pl.infoOpera(opera.getCod(), opera.getNome(), numero_pagina, 6);
+		
+		
 		frmBibliotecaDigitale = new JFrame();
 		frmBibliotecaDigitale.setTitle("Biblioteca Digitale - Opzioni Pagina");
 		frmBibliotecaDigitale.setResizable(false);
@@ -94,7 +101,7 @@ public class OpzioniPagina {
 			}
 		});
 		btnInserisciModifica.setFont(new Font("Myriad CAD", Font.BOLD, 11));
-		btnInserisciModifica.setBounds(175, 182, 232, 36);
+		btnInserisciModifica.setBounds(175, 138, 232, 36);
 		frmBibliotecaDigitale.getContentPane().add(btnInserisciModifica);
 		
 		JButton btnIndietro = new JButton("Indietro");
@@ -105,9 +112,39 @@ public class OpzioniPagina {
 			}
 		});
 		btnIndietro.setFont(new Font("Myriad CAD", Font.BOLD, 11));
-		btnIndietro.setBounds(175, 283, 232, 36);
+		btnIndietro.setBounds(175, 304, 232, 36);
 		frmBibliotecaDigitale.getContentPane().add(btnIndietro);
 		
+		JButton btnAssegnaPagina = new JButton("Assegna Pagina");
+		btnAssegnaPagina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//inserire
+				ChangePage.changePage1("setTrascrittore", utente, opera, numero_pagina);
+				frmBibliotecaDigitale.dispose();
+			}
+		});
+		btnAssegnaPagina.setFont(new Font("Myriad CAD", Font.BOLD, 11));
+		btnAssegnaPagina.setBounds(175, 195, 232, 36);
+		frmBibliotecaDigitale.getContentPane().add(btnAssegnaPagina);
+		
+		
+		//aggiungere permessi
+		if(utente.getMansione().equals("admin") || utente.getMansione().equals("manager"))
+			btnAssegnaPagina.setEnabled(true);
+		else
+			btnAssegnaPagina.setEnabled(false);
+		
+		
+		if(utente.getMansione().equals("admin") || utente.getMansione().equals("manager") || utente.getMansione().equals("transcriber") || utente.getMansione().equals("trascittore"))
+			btnInserisciModifica.setEnabled(true);
+		else
+			btnInserisciModifica.setEnabled(false);
+		
+		// da controllare
+		if(approvazione.equals("no") && utente.getMansione().equals("utente")) {
+			btnVisualizzaopera.setEnabled(false);			
+		}
+			
 
 	}
 }

@@ -29,6 +29,15 @@ public interface InterfaceUser {
     /* Modifica Dei Ruoli */
     public boolean setRuolo(String username, String ruolo) throws SQLException;
     
+    /* Inserisce i dati del trascrittore e il livello */
+    public boolean setTrascrittore(String username) throws SQLException;
+    
+    /* Aggiornamento di livello */
+    public boolean updateLivello(String username, int livello) throws SQLException;
+       
+    /*restituisce il lv del trascrittore */
+    public int lvTras (int cod) throws SQLException;
+    
     
 }
 

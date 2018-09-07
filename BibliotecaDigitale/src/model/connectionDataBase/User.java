@@ -339,6 +339,135 @@ public class User implements InterfaceUser {
         }
         return false;
     }
+    
+    public boolean setTrascrittore(String username) throws SQLException {
+
+        Connection dbConnection = model.connectionDataBase.ConnectionDB.Connect();
+        int livello = 1;
+        int cod = 0;
+        
+        /* recuepra id utente */
+        PreparedStatement stmt = dbConnection.prepareStatement("SELECT id \n" + "FROM   `utente` \n" + "WHERE  username = ? ");
+        stmt.setString(1, username);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+        	cod = rs.getInt("id");
+        }
+        
+        System.out.println(cod);
+        /* inserisce intrascrittori */
+        String approveReview = "INSERT INTO trascrittore (cod_trascrittore, livello) VALUES (?,?)";
+        PreparedStatement preparedStatement = null;
+
+        // Insert the values into the DB
+        try {
+            preparedStatement = dbConnection.prepareStatement(approveReview);
+
+            preparedStatement.setInt(1, cod);
+            preparedStatement.setInt(2, livello);
+            
+            if (preparedStatement.executeUpdate() != 0) {
+                return true;
+            }
+
+        
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+
+        } finally {
+            if (stmt != null) { //Ric
+                stmt.close();
+            }
+            
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+
+            if (dbConnection != null) {
+                dbConnection.close();
+            }
+        }
+        
+        return false;
+       
+    }
+    
+    public boolean updateLivello(String username, int livello) throws SQLException {
+
+        Connection dbConnection = model.connectionDataBase.ConnectionDB.Connect();
+        int cod = 0;
+        
+        /* recuepra id utente */
+        PreparedStatement stmt = dbConnection.prepareStatement("SELECT id \n" + "FROM   `utente` \n" + "WHERE  username = ? ");
+        stmt.setString(1, username);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+        	cod = rs.getInt("id");
+        }
+        
+        
+        /* inserisce intrascrittori */
+        String approveReview = "UPDATE trascrittore SET livello = ? WHERE cod_trascrittore = ?";
+        PreparedStatement preparedStatement = null;
+
+        // Insert the values into the DB
+        try {
+            preparedStatement = dbConnection.prepareStatement(approveReview);
+
+            preparedStatement.setInt(1, livello);
+            preparedStatement.setInt(2, cod);
+            
+            if (preparedStatement.executeUpdate() != 0) {
+                return true;
+            }
+
+        
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+
+        } finally {
+            if (stmt != null) { //Ric
+                stmt.close();
+            }
+            
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+
+            if (dbConnection != null) {
+                dbConnection.close();
+            }
+        }
+        return false;
+       
+    }
+    
+    
+    public int lvTras (int cod) throws SQLException {
+        int n = 0;
+    	// DB Connection
+        Connection dbConnection = model.connectionDataBase.ConnectionDB.Connect();
+        
+        PreparedStatement stmt = dbConnection.prepareStatement("SELECT livello \n" + "FROM   `trascrittore` \n" + "WHERE  cod_trascrittore = ? ");
+        stmt.setInt(1, cod);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+        	n = rs.getInt("livello");
+        }
+
+        if (stmt != null) { //Ric
+            stmt.close();
+        }
+        
+        
+        return n;
+
+    }
 
 
 }

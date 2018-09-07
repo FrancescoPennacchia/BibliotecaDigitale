@@ -35,5 +35,18 @@ public class UserList {
 		
 		return n;
 	}
+	
+	/* livello */
+	
+	public int lv(int cod) {
+		int n = 0;
+		try {
+			n = u.lvTras(cod);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+		
+		return n;
+	}
 
 }

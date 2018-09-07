@@ -26,7 +26,9 @@ INSERT INTO `utente` (`id`, `username`, `password`, `email`, `nome`, `cognome`, 
 (1, 'admin', '$2a$12$Nec9uFfcG3FnMkWySG83k.MRMZjfs4fRTM9DXhiXmaA2AfufavoRm', 'remolabarca@sempre.it', 'Remo', 'La Barca','1985-12-12', 'Nautico', 'Remare la barca', 'Oceano', 'admin'),
 (2, 'Pippo', '$2a$12$Nec9uFfcG3FnMkWySG83k.MRMZjfs4fRTM9DXhiXmaA2AfufavoRm', 'pippo@sempre.it', 'Pippo', 'LBhu','1958-10-12', 'uploader', 'uploader', 'Pippolandia', 'uploader'),
 (3, 'Pluto', '$2a$12$Nec9uFfcG3FnMkWySG83k.MRMZjfs4fRTM9DXhiXmaA2AfufavoRm', 'Plutoa@sempre.it', 'Pluto', 'Bhu','1985-12-12', 'transcriber', 'transcriber', 'Oceano', 'transcriber'),
-(4, 'Utente', '$2a$12$Nec9uFfcG3FnMkWySG83k.MRMZjfs4fRTM9DXhiXmaA2AfufavoRm', 'utente@sempre.it', 'Paperino', 'Piccolino','1990-10-15', 'Nautico', 'Remare la barca', 'Oceano', 'utente');
+(4, 'Utente', '$2a$12$Nec9uFfcG3FnMkWySG83k.MRMZjfs4fRTM9DXhiXmaA2AfufavoRm', 'utente@sempre.it', 'Paperino', 'Piccolino','1990-10-15', 'Nautico', 'Remare la barca', 'Oceano', 'utente'),
+(5, 'UtenteTest', '$2a$12$Nec9uFfcG3FnMkWySG83k.MRMZjfs4fRTM9DXhiXmaA2AfufavoRm', 'utente@sempre.it', 'Paperino', 'Piccolino','1990-10-15', 'Nautico', 'Remare la barca', 'Oceano', 'utente');
+
 
 
 USE BibliotecaDigitale;
@@ -57,6 +59,22 @@ CREATE TABLE `opera` (
 INSERT INTO `opera` (`nome`, `anno` , `autore`, `cod_categoria`) VALUES ('Prova Opera', 1958, 'Remo La Barca', 1);
 
 
+
+
+
+DROP TABLE IF EXISTS `trascrittore`;
+CREATE TABLE `trascrittore` (
+	`cod_trascrittore` int(11) NOT NULL,
+    `livello` int(1) NOT NULL,
+    
+    PRIMARY KEY (`cod_trascrittore`),
+    FOREIGN KEY (`cod_trascrittore`) REFERENCES utente(id)
+    );
+    
+INSERT INTO `trascrittore` (`cod_trascrittore`, `livello`) VALUES
+(1,1),
+(3,1);
+    
 DROP TABLE IF EXISTS `pagine_opera`;
 CREATE TABLE `pagine_opera` (
 	`cod_pagina` int(11) NOT NULL AUTO_INCREMENT,
@@ -64,12 +82,24 @@ CREATE TABLE `pagine_opera` (
     `trascrizione` varchar(350) NULL,
     `cod_opera` int(11) NOT NULL,
 	`numero_pagina` int (11) NOT NULL,
+    `cod_trascrittore` int(11) NULL,
+	`approvata` varchar(60) NULL,
 	PRIMARY KEY (`cod_pagina`),
-	FOREIGN KEY (`cod_opera`) REFERENCES opera(cod) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY (`cod_opera`) REFERENCES opera(cod),
+    FOREIGN KEY (`cod_trascrittore`) REFERENCES trascrittore(cod_trascrittore)
 );
 
 
 
+#DROP TABLE IF EXISTS `trascrizione`;
+#CREATE TABLE `trascrizione` (
+#	`cod_pagina` int(11),
+#`cod_trascrittore` int(11),
+#	PRIMARY KEY (`cod_pagina`, `cod_trascrittore`),
+#
+#    FOREIGN KEY (`cod_pagina`) REFERENCES `pagine_opera`(`cod_pagina`),   
+#   FOREIGN KEY (`cod_trascrittore`) REFERENCES `trascrittore`(`cod_trascrittore`)
+#);
 
 #INSERT INTO `pagine_opera` (`immagine_pagina` , `cod_opera`) VALUES (0x30, 1);
 
