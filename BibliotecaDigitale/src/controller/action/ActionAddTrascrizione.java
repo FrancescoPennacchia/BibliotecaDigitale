@@ -6,9 +6,13 @@ import model.connectionDataBase.ConnectionOpera;
 import model.interfaces.InterfaceOpera;
 
 public class ActionAddTrascrizione {
-	InterfaceOpera pagine = new ConnectionOpera();
+	InterfaceOpera pagine = null;
 	
 	public void addTrascrizione(String trascrizione, int cod) {
+		
+		if(pagine == null) {
+			pagine = new ConnectionOpera();
+		}
 		
 		try {
 			pagine.UpdateTrascrizione(trascrizione, cod);

@@ -11,12 +11,15 @@ import model.interfaces.InterfaceUser;
 
 public class ActionLogin {
 	
-	InterfaceUser utente = new User();
+	InterfaceUser utente = null;
 	//ActionLogin call = new ActionLogin();
 	
 	
 	/* Login Action */
 	public boolean UserLogin(String username, String password) {
+		if(utente == null) {
+			utente = new User();
+		}
 		
 		 try {
 				if(utente.UserLogin(username, password)){
@@ -40,6 +43,10 @@ public class ActionLogin {
 	
 	/* Ritorna l'utente */
 	 public Utente GetUtente(String username) throws SQLException {
+		if(utente == null) {
+			utente = new User();
+		}
+			
 		 Utente ut = utente.GetUtente(username);
 		 return ut;
 	 }

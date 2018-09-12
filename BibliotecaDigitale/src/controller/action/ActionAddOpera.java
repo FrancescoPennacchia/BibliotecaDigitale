@@ -4,9 +4,14 @@ import model.connectionDataBase.ConnectionOpera;
 import model.interfaces.InterfaceOpera;
 
 public class ActionAddOpera {
-	InterfaceOpera opera = new ConnectionOpera();
+	InterfaceOpera opera = null;
 	
 	public void addOpera(String nome, String autore, String anno, String cat) {
+		
+		if(opera == null) {
+			opera = new ConnectionOpera();
+		}
+		
 		try {
 			
 			int a = Integer.parseInt(anno);

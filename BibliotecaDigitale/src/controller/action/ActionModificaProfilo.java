@@ -10,12 +10,16 @@ import model.connectionDataBase.User;
 import model.interfaces.InterfaceUser;
 
 public class ActionModificaProfilo {
-	InterfaceUser ut = new User();
+	InterfaceUser ut = null;
 	
 	
 	
 	
 	public void Modifica(Utente utente, String u, String n, String c, String ts, String pro, String res, String em, String pa) {
+		if(ut == null) {
+			ut = new User();
+		}
+		
 		try {
 			String email = utente.getEmail();
 			String user = utente.getUsername();

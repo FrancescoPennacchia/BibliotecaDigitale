@@ -7,10 +7,13 @@ import model.connectionDataBase.ConnectionOpera;
 import model.interfaces.InterfaceOpera;
 
 public class OperaListCat {
-	InterfaceOpera opera = new ConnectionOpera();
+	InterfaceOpera opera = null;
 	Opera op = null;
 	
 	public String getInfoOpera(String cat, int cont, int n) {
+		if(opera == null) {
+			opera = new ConnectionOpera();
+		}
 		
 		String nome = "";
 		try {
@@ -22,6 +25,10 @@ public class OperaListCat {
 	}
 	
 	public int NumeroRigheOpera(String cat) {
+		
+		if(opera == null) {
+			opera = new ConnectionOpera();
+		}
 		
 		int n = 0;
 		
@@ -35,6 +42,10 @@ public class OperaListCat {
 	}
 	
 	public Opera getOpera(String cat, int cont, int n) {
+		if(opera == null) {
+			opera = new ConnectionOpera();
+		}
+		
 		String s = "";
 		
 		try {
@@ -52,6 +63,9 @@ public class OperaListCat {
 	
 	
 	public String getInfoOpera(int cont, int n) {
+		if(opera == null) {
+			opera = new ConnectionOpera();
+		}
 		
 		String nome = "";
 		try {
@@ -63,6 +77,9 @@ public class OperaListCat {
 	}
 	
 	public int NumeroRigheOpera() {
+		if(opera == null) {
+			opera = new ConnectionOpera();
+		}
 		
 		int n = 0;
 		

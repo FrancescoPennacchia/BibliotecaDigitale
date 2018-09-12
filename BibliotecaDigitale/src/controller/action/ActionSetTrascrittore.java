@@ -6,9 +6,12 @@ import model.connectionDataBase.ConnectionOpera;
 import model.interfaces.InterfaceOpera;
 
 public class ActionSetTrascrittore {
-	InterfaceOpera opera = new ConnectionOpera();
+	InterfaceOpera opera = null;
 	
 	public void setTras(String username, int n) {
+		if(opera == null) {
+			opera = new ConnectionOpera();
+		}
 		try {
 			if(opera.assegnaTrascrizione(username, n)) {
 				JOptionPane.showMessageDialog(null, "Assegnata"); // da controllare

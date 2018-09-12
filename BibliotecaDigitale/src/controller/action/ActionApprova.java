@@ -6,9 +6,15 @@ import model.connectionDataBase.ConnectionOpera;
 import model.interfaces.InterfaceOpera;
 
 public class ActionApprova {
-	InterfaceOpera opera = new ConnectionOpera();
+	InterfaceOpera opera = null;
 	
 	public void appovazione(int cod) {
+		
+		
+		if(opera == null) {
+			opera = new ConnectionOpera();
+		}
+		
 		try {
 			if(opera.approvaTrascrizione(cod)) 
 				JOptionPane.showMessageDialog(null, "Approvata");

@@ -7,11 +7,15 @@ import model.connectionDataBase.ConnectionOpera;
 import model.interfaces.InterfaceOpera;
 
 public class OperaList {
-	InterfaceOpera opera = new ConnectionOpera();
+	InterfaceOpera opera = null;
 	Opera op = null;
 	
 	/* Ritorna i dati contenuti nella tabella opera RIGA COLONNA */
 	public String getInfoOpera(int cont, int n) {
+		if(opera == null) {
+			opera = new ConnectionOpera();
+		}
+		
 		String nome = "";
 		
 		try {
@@ -25,6 +29,9 @@ public class OperaList {
 	
 	/* Numero di righe totali della tabella */
 	public int NumeroRigheOpera() {
+		if(opera == null) {
+			opera = new ConnectionOpera();
+		}
 		
 		int n = 0;
 		
@@ -38,6 +45,10 @@ public class OperaList {
 	}	
 	
 	public Opera getOpera(int cont, int n) {
+		if(opera == null) {
+			opera = new ConnectionOpera();
+		}
+		
 		String cat = "";
 		
 		try {

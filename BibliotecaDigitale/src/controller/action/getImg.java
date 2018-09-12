@@ -14,9 +14,12 @@ import model.connectionDataBase.ConnectionOpera;
 import model.interfaces.InterfaceOpera;
 
 public class getImg {
-	InterfaceOpera pagine = new ConnectionOpera();
+	InterfaceOpera pagine = null;
 	
 	public Panel getImmagine(int cod_pagina) {
+		if(pagine == null) {
+			pagine = new ConnectionOpera();
+		}
 		Panel panel = new Panel();
 		try {
 			 

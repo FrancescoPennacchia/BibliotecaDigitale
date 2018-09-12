@@ -10,9 +10,12 @@ import model.connectionDataBase.User;
 import model.interfaces.InterfaceUser;
 
 public class ActionRegistrazione {
-	InterfaceUser utente = new User();
+	InterfaceUser utente = null;
 
 	public void Registrazione(String username, String pass, String email, String nome, String cognome, String Data, String studi, String professione, String residenza){
+		if(utente == null) {
+			utente = new User();
+		}
 		
 		try {
 			          

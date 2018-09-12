@@ -15,10 +15,19 @@ import model.interfaces.InterfaceOpera;
 
 public class ActionAddPagina {
 	final String[] img = {""};
-	JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-	InterfaceOpera opera = new ConnectionOpera();
+	JFileChooser jfc = null;
+	InterfaceOpera opera = null;
 	
 	public void setImage(int cod, String n) {
+		
+		if(opera == null) {
+			opera = new ConnectionOpera();
+		}
+		
+		if(jfc == null) {
+			jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+		}
+		
 		
         int retVal = jfc.showOpenDialog(null);
         if (retVal == JFileChooser.APPROVE_OPTION) {

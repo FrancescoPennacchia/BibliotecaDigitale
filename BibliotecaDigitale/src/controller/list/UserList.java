@@ -10,6 +10,9 @@ public class UserList {
 	
 	/* Ritorna l'username dell'utente  posizione RIGA COLONNA */
 	public String UsernameUser(int cont, int n) {
+		if(u == null) {
+			u= new User();
+		}
 		
 		String user = "";
 		
@@ -24,6 +27,11 @@ public class UserList {
 	
 	/* Numero di righe totali della tabella */
 	public int NumeroRighe() {
+		if(u == null) {
+			u= new User();
+		}
+		
+		
 		
 		int n = 0;
 		
@@ -39,6 +47,11 @@ public class UserList {
 	/* livello */
 	
 	public int lv(int cod) {
+		if(u == null) {
+			u= new User();
+		}
+		
+		
 		int n = 0;
 		try {
 			n = u.lvTras(cod);

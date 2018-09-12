@@ -8,10 +8,14 @@ import model.connectionDataBase.User;
 import model.interfaces.InterfaceUser;
 
 public class ActionLivello {
-	InterfaceUser utente = new User();
+	InterfaceUser utente = null;
 	
 	public void LvUp(String u, int lv) {
 
+		if(utente == null) {
+			utente = new User();
+		}
+		
 		try {
 			if(lv >= 1 && lv < 5) {
 				if(utente.updateLivello(u, lv + 1)) {
@@ -28,6 +32,9 @@ public class ActionLivello {
 	}
 	
 	public void LvD(String u, int lv) {
+		if(utente == null) {
+			utente = new User();
+		}
 
 		try {
 			if(lv > 1) {

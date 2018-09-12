@@ -8,9 +8,13 @@ import model.connectionDataBase.User;
 import model.interfaces.InterfaceUser;
 
 public class ActionChangeRuolo {
-	InterfaceUser us = new User();
+	InterfaceUser us = null;
 	
 	public void ChangeRuolo(String username, String ruolo) {
+		
+		if(us == null) {
+			us = new User();
+		}
 		
 		try {
 			

@@ -8,10 +8,14 @@ import model.connectionDataBase.User;
 import model.interfaces.InterfaceUser;
 
 public class ActionDeleteProfile {
-	InterfaceUser utente = new User();
+	InterfaceUser utente = null;
 	
 	
 	public void DeleteUser(String username){
+		
+		if(utente == null) {
+			utente = new User();
+		}
 		
 		try {
 			if(utente.DeleteUser(username)) {

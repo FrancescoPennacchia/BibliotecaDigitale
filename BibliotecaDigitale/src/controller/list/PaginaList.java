@@ -6,10 +6,16 @@ import model.connectionDataBase.ConnectionOpera;
 import model.interfaces.InterfaceOpera;
 
 public class PaginaList {
-	InterfaceOpera pagine = new ConnectionOpera();
+	InterfaceOpera pagine = null;
 	
 	/* numero righe tabella opera */
 	public int numeroRighe(int cod, String nome) {
+		
+		if(pagine == null) {
+			pagine = new ConnectionOpera();
+		}
+		
+		
 		// controllare
 		int n = 0;
 		try {		
@@ -23,6 +29,11 @@ public class PaginaList {
 	
 	/* info opera */
 	public String infoOpera(int cod, String nome, int r, int c) {
+		
+		if(pagine == null) {
+			pagine = new ConnectionOpera();
+		}
+		
 		String s = "";
 		
 		try {		

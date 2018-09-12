@@ -22,6 +22,8 @@ import javax.swing.JTextField;
 import common.ChangePage;
 import common.vo.Opera;
 import common.vo.Utente;
+import javax.swing.SwingConstants;
+import javax.swing.JTextArea;
 
 public class ModuloAggiungiTrascrizione {
 	Utente utente = null;
@@ -154,14 +156,13 @@ public class ModuloAggiungiTrascrizione {
              frmBibliotecaDigitale.getContentPane().add(btnInserisci);
              
              textField = new JTextField();
+             textField.setHorizontalAlignment(SwingConstants.LEFT);
              textField.setFont(new Font("Gadugi", Font.BOLD | Font.ITALIC, 12));
              textField.setForeground(Color.GRAY);
              textField.setToolTipText("Inserire la trascrizione");
              textField.setBounds(37, 58, 215, 265);
              frmBibliotecaDigitale.getContentPane().add(textField);
              textField.setColumns(10);
-
-
 
 	
 	}
